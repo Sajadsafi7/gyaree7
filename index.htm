@@ -8,39 +8,38 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>10 Bästa Fotbollsspelare</title>
 <style>
-  /* --- Grundstil --- */
-  body { margin:0; font-family: 'Inter', Arial, sans-serif; background:#0b1724; color:#e6f0fb; }
-  a { text-decoration: none; color: inherit; }
-
-  /* --- Header --- */
-  header { display:flex; align-items:center; justify-content:space-between; padding:20px 30px; background:#071224; border-bottom:1px solid #1a2a3a; position:sticky; top:0; z-index:10; }
+  body { margin:0; font-family:'Inter',Arial,sans-serif; background:#0b1724; color:#e6f0fb; }
+  header { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; padding:20px 30px; background:#071224; border-bottom:1px solid #1a2a3a; position:sticky; top:0; z-index:10; }
   header h1 { font-size:1.8em; color:#ffb703; margin:0; }
-  .search-bar { display:flex; gap:10px; }
-  .search-bar input { padding:8px 12px; border-radius:8px; border:none; outline:none; width:200px; }
-  .search-bar button { padding:8px 15px; border:none; border-radius:8px; background:#ffb703; color:#071224; font-weight:bold; cursor:pointer; transition:0.2s; }
-  .search-bar button:hover { background:#e6a400; }
+  .controls { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:10px; }
+  .controls input, .controls select { padding:8px 12px; border-radius:8px; border:none; outline:none; }
+  .controls button { padding:8px 15px; border:none; border-radius:8px; background:#ffb703; color:#071224; font-weight:bold; cursor:pointer; transition:0.2s; }
+  .controls button:hover { background:#e6a400; }
 
-  /* --- Grid --- */
-  .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:20px; padding:20px 30px; }
-  .card { background:#0b1724; border-radius:12px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.5); cursor:pointer; transition:transform 0.3s, box-shadow 0.3s; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:20px; padding:20px 30px; }
+  .card { background:#0b1724; border-radius:12px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.5); cursor:pointer; transition:transform 0.3s, box-shadow 0.3s, opacity 0.5s, transform 0.5s; opacity:0; transform:translateY(20px); }
+  .card.show { opacity:1; transform:translateY(0); }
   .card:hover { transform:translateY(-6px); box-shadow:0 12px 24px rgba(0,0,0,0.7); }
   .card img { width:100%; height:250px; object-fit:cover; transition:transform 0.3s; }
-  .card:hover img { transform: scale(1.05); }
+  .card:hover img { transform:scale(1.05); }
   .card .body { padding:15px; }
   .card h3 { color:#ffb703; margin-bottom:5px; font-size:1.2em; }
   .card p { font-size:0.9em; color:#9fb0c7; }
 
-  /* --- Lightbox --- */
-  .lightbox { display:none; position:fixed; inset:0; background:rgba(2,6,23,0.95); justify-content:center; align-items:center; flex-direction:column; z-index:100; padding:20px; }
-  .lightbox img { max-width:90%; max-height:70%; border-radius:12px; margin-bottom:15px; box-shadow:0 8px 20px rgba(0,0,0,0.7); }
-  .lightbox h2 { color:#ffb703; margin-bottom:10px; font-size:2em; text-align:center; }
-  .lightbox p { color:#e6f0fb; max-width:700px; text-align:center; margin-bottom:20px; font-size:1em; line-height:1.4em; }
-  .lightbox button { padding:10px 25px; border:none; border-radius:8px; background:#ffb703; color:#071224; font-weight:bold; cursor:pointer; transition:0.2s; }
+  .lightbox { display:flex; position:fixed; inset:0; background:rgba(2,6,23,0.95); justify-content:center; align-items:center; flex-direction:column; z-index:100; padding:20px; text-align:center; opacity:0; visibility:hidden; transform:scale(0.95); transition:opacity 0.3s ease, transform 0.3s ease, visibility 0.3s; }
+  .lightbox.show { opacity:1; visibility:visible; transform:scale(1); }
+  .lightbox img { max-width:90%; max-height:70%; border-radius:12px; margin-bottom:15px; box-shadow:0 8px 20px rgba(0,0,0,0.7); transition:transform 0.3s ease; }
+  .lightbox img.show-img { transform:scale(1); }
+  .lightbox h2 { color:#ffb703; margin-bottom:10px; font-size:2em; }
+  .lightbox p { color:#e6f0fb; max-width:700px; margin-bottom:20px; font-size:1em; line-height:1.4em; }
+
+  .lightbox .actions { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+  .lightbox button { padding:10px 20px; border:none; border-radius:8px; background:#ffb703; color:#071224; font-weight:bold; cursor:pointer; transition:0.2s; }
   .lightbox button:hover { background:#e6a400; }
 
   @media(max-width:600px){
     .card img { height:180px; }
-    header { flex-direction:column; gap:10px; align-items:flex-start; }
+    header{flex-direction:column; gap:10px; align-items:flex-start;}
   }
 </style>
 </head>
@@ -48,9 +47,20 @@
 
 <header>
   <h1>Fotbollsgaleri</h1>
-  <div class="search-bar">
+  <div class="controls">
     <input id="searchInput" placeholder="Sök spelare...">
-    <button id="searchBtn">Sök</button>
+    <select id="positionFilter">
+      <option value="all">Alla positioner</option>
+      <option value="Forward">Forward</option>
+      <option value="Mittfältare">Mittfältare</option>
+      <option value="Försvarare">Försvarare</option>
+      <option value="Målvakt">Målvakt</option>
+    </select>
+    <select id="sortSelect">
+      <option value="name">Sortera: A–Ö</option>
+      <option value="random">Sortera: Slumpmässigt</option>
+    </select>
+    <button id="applyBtn">Visa</button>
   </div>
 </header>
 
@@ -60,22 +70,29 @@
   <img id="lbImage" src="" alt="Spelare">
   <h2 id="lbName"></h2>
   <p id="lbDesc"></p>
-  <button id="closeLB">Stäng</button>
+  <div class="actions">
+    <button id="prevBtn">Föregående</button>
+    <button id="nextBtn">Nästa</button>
+    <button id="closeLB">Stäng</button>
+  </div>
 </div>
 
 <script>
 const players = [
-  {name:'Lionel Messi',desc:'Argentinsk superstjärna, känd för sin teknik, dribblingar och målskytte. En av de mest framstående spelarna i historien.',img:'https://source.unsplash.com/600x400/?lionel,messi,football'},
-  {name:'Cristiano Ronaldo',desc:'Portugisisk målmaskin, snabb och extremt stark i luften. Känd för sitt professionella driv och målrekord.',img:'https://source.unsplash.com/600x400/?cristiano,ronaldo,football'},
-  {name:'Pelé',desc:'Brasiliansk legend, vann tre VM-titlar och anses av många som den största spelaren genom tiderna.',img:'https://source.unsplash.com/600x400/?pele,football'},
-  {name:'Diego Maradona',desc:'Argentinsk ikon, känd för sin ”Guds hand” och fantastiska dribblingar.',img:'https://source.unsplash.com/600x400/?maradona,football'},
-  {name:'Zinedine Zidane',desc:'Fransk mittfältare, elegant spelstil och avgörande i stora matcher.',img:'https://source.unsplash.com/600x400/?zidane,football'},
-  {name:'Ronaldinho',desc:'Brasiliansk trollkarl, briljant dribbling och kreativitet.',img:'https://source.unsplash.com/600x400/?ronaldinho,football'},
-  {name:'Johan Cruyff',desc:'Holländsk legend, känd för totalfotboll och intelligens på planen.',img:'https://source.unsplash.com/600x400/?cruyff,football'},
-  {name:'Franz Beckenbauer',desc:'Tysk försvarsspelare och mittfältare, elegant och taktiskt geni.',img:'https://source.unsplash.com/600x400/?beckenbauer,football'},
-  {name:'Michel Platini',desc:'Fransk mittfältare, känd för sina mål och ledarskap.',img:'https://source.unsplash.com/600x400/?platini,football'},
-  {name:'George Best',desc:'Nordirisk stjärna, kreativ och explosiv med en unik spelstil.',img:'https://source.unsplash.com/600x400/?george,best,football'}
+  {name:'Lionel Messi',desc:'Argentinsk superstjärna, känd för sin teknik, dribblingar och målskytte. En av de mest framstående spelarna i historien.',position:'Forward',img:'https://source.unsplash.com/600x400/?lionel,messi,football'},
+  {name:'Cristiano Ronaldo',desc:'Portugisisk målmaskin, snabb och extremt stark i luften. Känd för sitt professionella driv och målrekord.',position:'Forward',img:'https://source.unsplash.com/600x400/?cristiano,ronaldo,football'},
+  {name:'Pelé',desc:'Brasiliansk legend, vann tre VM-titlar och anses av många som den största spelaren genom tiderna.',position:'Forward',img:'https://source.unsplash.com/600x400/?pele,football'},
+  {name:'Diego Maradona',desc:'Argentinsk ikon, känd för sin ”Guds hand” och fantastiska dribblingar.',position:'Mittfältare',img:'https://source.unsplash.com/600x400/?maradona,football'},
+  {name:'Zinedine Zidane',desc:'Fransk mittfältare, elegant spelstil och avgörande i stora matcher.',position:'Mittfältare',img:'https://source.unsplash.com/600x400/?zidane,football'},
+  {name:'Ronaldinho',desc:'Brasiliansk trollkarl, briljant dribbling och kreativitet.',position:'Mittfältare',img:'https://source.unsplash.com/600x400/?ronaldinho,football'},
+  {name:'Johan Cruyff',desc:'Holländsk legend, känd för totalfotboll och intelligens på planen.',position:'Mittfältare',img:'https://source.unsplash.com/600x400/?cruyff,football'},
+  {name:'Franz Beckenbauer',desc:'Tysk försvarsspelare och mittfältare, elegant och taktiskt geni.',position:'Försvarare',img:'https://source.unsplash.com/600x400/?beckenbauer,football'},
+  {name:'Michel Platini',desc:'Fransk mittfältare, känd för sina mål och ledarskap.',position:'Mittfältare',img:'https://source.unsplash.com/600x400/?platini,football'},
+  {name:'George Best',desc:'Nordirisk stjärna, kreativ och explosiv med en unik spelstil.',position:'Forward',img:'https://source.unsplash.com/600x400/?george,best,football'}
 ];
+
+let filteredPlayers = [...players];
+let activeIndex = 0;
 
 const grid = document.getElementById('grid');
 const lightbox = document.getElementById('lightbox');
@@ -83,13 +100,17 @@ const lbImage = document.getElementById('lbImage');
 const lbName = document.getElementById('lbName');
 const lbDesc = document.getElementById('lbDesc');
 const closeLB = document.getElementById('closeLB');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
 const searchInput = document.getElementById('searchInput');
-const searchBtn = document.getElementById('searchBtn');
+const positionFilter = document.getElementById('positionFilter');
+const sortSelect = document.getElementById('sortSelect');
+const applyBtn = document.getElementById('applyBtn');
 
 function render(list){
-  grid.innerHTML = '';
-  list.forEach(player => {
-    const card = document.createElement('div');
+  grid.innerHTML='';
+  list.forEach((player,i)=>{
+    const card=document.createElement('div');
     card.className='card';
     card.innerHTML=`
       <img src="${player.img}" alt="${player.name}">
@@ -98,27 +119,44 @@ function render(list){
         <p>${player.desc.substring(0,60)}...</p>
       </div>
     `;
-    card.addEventListener('click',()=>openLB(player));
+    card.addEventListener('click',()=>openLB(i));
     grid.appendChild(card);
+
+    // Entrance animation med delay
+    setTimeout(()=>{ card.classList.add('show'); }, i*100);
   });
 }
 
-function openLB(player){
+function openLB(index){
+  activeIndex=index;
+  const player=filteredPlayers[index];
   lbImage.src=player.img;
   lbName.textContent=player.name;
   lbDesc.textContent=player.desc;
-  lightbox.style.display='flex';
+  lightbox.classList.add('show');
 }
 
-closeLB.addEventListener('click',()=>lightbox.style.display='none');
+function closeLightbox(){ lightbox.classList.remove('show'); }
+function prev(){ activeIndex=(activeIndex-1+filteredPlayers.length)%filteredPlayers.length; openLB(activeIndex); }
+function next(){ activeIndex=(activeIndex+1)%filteredPlayers.length; openLB(activeIndex); }
 
-searchBtn.addEventListener('click',()=>{
-  const query = searchInput.value.toLowerCase();
-  const filtered = players.filter(p=>p.name.toLowerCase().includes(query));
-  render(filtered);
+closeLB.addEventListener('click',closeLightbox);
+prevBtn.addEventListener('click',prev);
+nextBtn.addEventListener('click',next);
+
+// Filter och sortering
+applyBtn.addEventListener('click',()=>{
+  const query=searchInput.value.toLowerCase();
+  filteredPlayers = players.filter(p=>{
+    return (p.name.toLowerCase().includes(query) || p.position.toLowerCase().includes(query))
+           && (positionFilter.value==='all' || p.position===positionFilter.value);
+  });
+  if(sortSelect.value==='name') filteredPlayers.sort((a,b)=>a.name.localeCompare(b.name));
+  else if(sortSelect.value==='random') filteredPlayers.sort(()=>Math.random()-0.5);
+  render(filteredPlayers);
 });
 
-render(players);
+render(filteredPlayers);
 </script>
 
 </body>
