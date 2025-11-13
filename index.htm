@@ -4,372 +4,278 @@
        <h1><!DOCTYPE html>
 <html lang="sv">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>10 Bästa Fotbollsspelare</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Barista Café</title>
 <style>
-  body {
-    margin:0;
-    font-family:'Inter',Arial,sans-serif;
-    background:#000;
-    color:#fff;
-    opacity:0;
-    animation: fadeInBody 1s ease forwards;
-  }
+body {
+  margin: 0;
+  font-family: "Inter", Arial, sans-serif;
+  background: #111;
+  color: #fff;
+}
 
-  @keyframes fadeInBody {
-    from { opacity:0; }
-    to { opacity:1; }
-  }
+/* HEADER */
+header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  background: #1b1b1b;
+  padding: 20px 30px;
+  border-bottom: 2px solid #d2b48c;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+header h1 {
+  color: #d2b48c;
+  margin: 0;
+  font-size: 1.8em;
+}
+.controls {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.controls input,
+.controls select {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #555;
+  background: #222;
+  color: #fff;
+  outline: none;
+}
+.controls button {
+  padding: 8px 15px;
+  background: #d2b48c;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+.controls button:hover {
+  background: #f0c98a;
+}
 
-  header {
-    display:flex;
-    flex-wrap:wrap;
-    align-items:center;
-    justify-content:space-between;
-    padding:20px 30px;
-    background:#111;
-    border-bottom:1px solid #333;
-    position:sticky;
-    top:0;
-    z-index:10;
-  }
+/* INTRO */
+.intro {
+  text-align: center;
+  padding: 60px 20px 30px;
+}
+.intro h2 {
+  color: #d2b48c;
+  font-size: 2.3em;
+  margin-bottom: 10px;
+}
+.intro p {
+  color: #ccc;
+  font-size: 1.1em;
+  max-width: 600px;
+  margin: auto;
+}
 
-  header h1 {
-    font-size:1.8em;
-    color:#fff;
-    margin:0;
-  }
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px 30px;
+}
 
-  .controls {
-    display:flex;
-    gap:10px;
-    flex-wrap:wrap;
-    align-items:center;
-    margin-top:10px;
-  }
+/* CARD */
+.card {
+  background: #1b1b1b;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(210,180,140,0.3);
+}
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+.card .body {
+  padding: 15px;
+}
+.card h3 {
+  color: #fff;
+  margin: 0;
+}
+.card p {
+  color: #bbb;
+  font-size: 0.9em;
+}
 
-  .controls input,
-  .controls select {
-    padding:8px 12px;
-    border-radius:8px;
-    border:1px solid #444;
-    background:#000;
-    color:#fff;
-    outline:none;
-  }
-
-  .controls button {
-    padding:8px 15px;
-    border:none;
-    border-radius:8px;
-    background:#fff;
-    color:#000;
-    font-weight:bold;
-    cursor:pointer;
-    transition:0.3s;
-  }
-
-  .controls button:hover { background:#ccc; }
-
-  .intro {
-    text-align:center;
-    padding:80px 20px 20px;
-    background:linear-gradient(180deg,#111 0%,#000 100%);
-    animation: fadeSlideIn 1.5s ease forwards;
-  }
-
-  .intro h2 {
-    font-size:2.5em;
-    margin-bottom:10px;
-    color:#fff;
-    letter-spacing:1px;
-  }
-
-  .intro p {
-    font-size:1.2em;
-    color:#aaa;
-    max-width:600px;
-    margin:auto;
-  }
-
-  @keyframes fadeSlideIn {
-    from { opacity:0; transform:translateY(30px); }
-    to { opacity:1; transform:translateY(0); }
-  }
-
-  .grid {
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:20px;
-    padding:20px 30px;
-  }
-
-  .card {
-    position:relative;
-    background:#111;
-    border-radius:14px;
-    overflow:hidden;
-    box-shadow:0 4px 12px rgba(255,255,255,0.1);
-    cursor:pointer;
-    transition:transform 0.3s, box-shadow 0.3s, opacity 0.5s, transform 0.5s;
-    opacity:0;
-    transform:translateY(20px);
-  }
-
-  .card.show { opacity:1; transform:translateY(0); }
-
-  .card:hover {
-    transform:translateY(-6px);
-    box-shadow:0 12px 24px rgba(255,255,255,0.2);
-  }
-
-  .card img {
-    width:100%;
-    height:250px;
-    object-fit:cover;
-    filter:grayscale(100%);
-    transition:transform 0.3s, filter 0.3s;
-    display:block;
-  }
-
-  .card:hover img {
-    transform:scale(1.05);
-    filter:grayscale(0%);
-  }
-
-  .card .body {
-    padding:15px;
-  }
-
-  .card h3 {
-    margin:0;
-    font-size:1.2em;
-    color:#fff;
-  }
-
-  .card p {
-    font-size:0.9em;
-    color:#ccc;
-    margin-top:3px;
-  }
-
-  .rank {
-    position:absolute;
-    top:10px;
-    left:10px;
-    background:rgba(255,255,255,0.1);
-    color:#fff;
-    padding:6px 10px;
-    border-radius:8px;
-    font-weight:bold;
-    font-size:1em;
-    backdrop-filter:blur(4px);
-  }
-
-  .lightbox {
-    display:flex;
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.95);
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-    z-index:100;
-    padding:20px;
-    opacity:0;
-    visibility:hidden;
-    transform:scale(0.95);
-    transition:opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
-  }
-
-  .lightbox.show { opacity:1; visibility:visible; transform:scale(1); }
-
-  .lightbox img {
-    max-width:90%;
-    max-height:40%;
-    border-radius:12px;
-    margin-bottom:15px;
-    box-shadow:0 8px 20px rgba(255,255,255,0.2);
-    filter:grayscale(100%);
-  }
-
-  .lightbox .text-container {
-    max-height:50vh;
-    overflow-y:auto;
-    width:90%;
-    margin-bottom:15px;
-    padding-right:10px;
-    text-align:left;
-  }
-
-  .lightbox h2 {
-    color:#fff;
-    margin-bottom:10px;
-    font-size:2em;
-  }
-
-  .lightbox p {
-    color:#ccc;
-    font-size:1em;
-    line-height:1.6em;
-  }
-
-  .lightbox .text-container::-webkit-scrollbar { width:8px; }
-  .lightbox .text-container::-webkit-scrollbar-thumb { background:#555; border-radius:4px; }
-  .lightbox .text-container::-webkit-scrollbar-track { background:#111; border-radius:4px; }
-
-  .lightbox .actions {
-    display:flex;
-    gap:10px;
-    justify-content:center;
-    flex-wrap:wrap;
-  }
-
-  .lightbox button {
-    padding:10px 20px;
-    border:none;
-    border-radius:8px;
-    background:#fff;
-    color:#000;
-    font-weight:bold;
-    cursor:pointer;
-    transition:0.2s;
-  }
-
-  .lightbox button:hover { background:#ccc; }
-
-  @media(max-width:600px){
-    .card img { height:180px; }
-    header{flex-direction:column; gap:10px; align-items:flex-start;}
-  }
+/* LIGHTBOX */
+.lightbox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.95);
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.9);
+  transition: all 0.3s ease;
+  z-index: 200;
+  padding: 20px;
+}
+.lightbox.show {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+}
+.lightbox img {
+  max-width: 90%;
+  max-height: 40%;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+.lightbox .text-container {
+  max-height: 45vh;
+  overflow-y: auto;
+  width: 90%;
+  text-align: left;
+  padding-right: 10px;
+}
+.lightbox h2 {
+  color: #d2b48c;
+}
+.lightbox p {
+  color: #ccc;
+  line-height: 1.6em;
+}
+.lightbox button {
+  background: #d2b48c;
+  color: #000;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+  margin-top: 10px;
+}
+.lightbox button:hover {
+  background: #f0c98a;
+}
 </style>
 </head>
 <body>
 
 <header>
-  <h1>Fotbollsgaleri – Topp 10</h1>
+  <h1>Barista Café</h1>
   <div class="controls">
-    <input id="searchInput" placeholder="Sök spelare...">
-    <select id="positionFilter">
-      <option value="all">Alla positioner</option>
-      <option value="Forward">Forward</option>
-      <option value="Mittfältare">Mittfältare</option>
-      <option value="Försvarare">Försvarare</option>
-      <option value="Målvakt">Målvakt</option>
+    <input id="searchInput" placeholder="Sök dryck eller mat..." />
+    <select id="categoryFilter">
+      <option value="all">Alla kategorier</option>
+      <option value="Varm Dryck">Varm Dryck</option>
+      <option value="Kall Dryck">Kall Dryck</option>
+      <option value="Juice">Juice</option>
+      <option value="Mat">Mat</option>
     </select>
-    <select id="sortSelect">
-      <option value="name">Sortera: A–Ö</option>
-      <option value="random">Slumpmässig ordning</option>
-    </select>
-    <button id="applyBtn">Visa</button>
+    <button id="applyBtn">Sök</button>
   </div>
 </header>
 
 <section class="intro">
-  <h2>Top 10 genom tiderna</h2>
-  <p>Världens mest legendariska fotbollsspelare – de som format historien, inspirerat generationer och skapat oförglömliga ögonblick på planen.</p>
+  <h2>Välkommen till Barista Café</h2>
+  <p>Upptäck våra handgjorda drycker och färska smörgåsar. En plats där varje klunk känns som hemma ☕.</p>
 </section>
 
 <div class="grid" id="grid"></div>
 
+<!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox">
-  <img id="lbImage" src="" alt="Spelare">
+  <img id="lbImage" src="" alt="Produkt" />
   <div class="text-container">
     <h2 id="lbName"></h2>
     <p id="lbDesc"></p>
   </div>
-  <div class="actions">
-    <button id="prevBtn">Föregående</button>
-    <button id="nextBtn">Nästa</button>
-    <button id="closeLB">Stäng</button>
-  </div>
+  <button id="closeLB">Stäng</button>
 </div>
 
 <script>
-const players = [
-  {name:'Lionel Messi',desc:'Lionel Messi, argentinsk superstjärna, anses av många vara den största fotbollsspelaren genom tiderna. Hans precision, dribblingar och målskytte är enastående. Messi började sin karriär i FC Barcelona och har vunnit otaliga titlar, inklusive flera Ballon d\'Or. Han är känd för sin ödmjukhet, hårda arbetsmoral och sin förmåga att inspirera unga spelare. Under sin tid i PSG fortsatte han att visa magi på planen med en balans mellan snabbhet, kreativitet och mål. Messi har även lett Argentina till Copa America och VM-guld 2022, vilket cementerar hans status som en levande legend.',position:'Forward',img:'https://source.unsplash.com/600x400/?lionel,messi,football'},
-  {name:'Cristiano Ronaldo',desc:'Cristiano Ronaldo, portugisisk målmaskin, har erövrat fotbollsvärlden med sin styrka, snabbhet och otroliga målproduktion. Han har spelat i Manchester United, Real Madrid, Juventus och Al Nassr. Ronaldo är känd för sin disciplin, sitt fokus och sin ständiga vilja att förbättras. Med fem Ballon d\'Or och otaliga rekord i Champions League är han en ikon för professionalism och prestation.',position:'Forward',img:'https://source.unsplash.com/600x400/?cristiano,ronaldo,football'},
-  {name:'Pelé',desc:'Pelé, den brasilianska legenden, vann tre VM-titlar – något ingen annan spelare har gjort. Hans otroliga teknik, spelförståelse och målmedvetenhet gjorde honom till en global symbol för fotbollens skönhet. Han gjorde över 1000 mål under sin karriär och var en ambassadör för sporten långt efter sin pensionering.',position:'Forward',img:'https://source.unsplash.com/600x400/?pele,football'},
-  {name:'Diego Maradona',desc:'Maradona, känd som ”El Diego”, trollband världen med sin teknik, passion och karisma. Hans solomål mot England 1986 betraktas som ett av tidernas bästa. Maradona ledde Napoli till osannolika triumfer i Serie A och är en symbol för fotbollens magi och mänsklighet.',position:'Mittfältare',img:'https://source.unsplash.com/600x400/?maradona,football'},
-  {name:'Zinedine Zidane',desc:'Zidane, en fransk mittfältare med otrolig elegans och lugn, var en mästare på bollkontroll och spelintelligens. Han vann VM 1998 och EM 2000 samt Champions League som både spelare och tränare. Hans prestationer på planen präglas av klass och effektivitet.',position:'Mittfältare',img:'https://source.unsplash.com/600x400/?zidane,football'},
-  {name:'Ronaldinho',desc:'Ronaldinho var ren glädje på en fotbollsplan. Hans dribblingar, leenden och spektakulära mål gjorde honom till en publikfavorit. Han vann Ballon d’Or 2005 och förde Barcelona till nya höjder. Ronaldinho påminde världen om att fotboll ska vara roligt.',position:'Mittfältare',img:'https://source.unsplash.com/600x400/?ronaldinho,football'},
-  {name:'Johan Cruyff',desc:'Cruyff revolutionerade fotbollen med sitt koncept av totalfotboll. Som spelare i Ajax och Barcelona inspirerade han en ny generation med sin intelligens, teknik och spelförståelse. Han formade också framtida lag som tränare och blev en filosof inom sporten.',position:'Mittfältare',img:'https://source.unsplash.com/600x400/?cruyff,football'},
-  {name:'Franz Beckenbauer',desc:'Beckenbauer, ”Der Kaiser”, var pionjären bakom den moderna mittbacken. Han kombinerade defensiv skicklighet med kreativt speluppbyggande. Som spelare och tränare vann han VM, vilket gör honom till en av de mest framgångsrika inom fotbollshistorien.',position:'Försvarare',img:'https://source.unsplash.com/600x400/?beckenbauer,football'},
-  {name:'Michel Platini',desc:'Platini var en strateg och artist på planen. Med sin passningsfot och sitt öga för mål ledde han Frankrike till segrar under 1980-talet. Hans intelligens och ledarskap gjorde honom till en symbol för fransk elegans inom fotboll.',position:'Mittfältare',img:'https://source.unsplash.com/600x400/?platini,football'},
-  {name:'George Best',desc:'George Best var fotbollens rockstjärna – en blandning av talang, charm och rebelliskhet. Hans tid i Manchester United visade dribblingar och mål av sällan skådad kvalitet. Trots en kortare karriär än många andra lever hans legend vidare.',position:'Forward',img:'https://source.unsplash.com/600x400/?george,best,football'}
+const menu = [
+  {name:'Cappuccino',category:'Varm Dryck',desc:'En klassisk cappuccino med perfekt balans mellan espresso, mjölk och skum.',img:'https://source.unsplash.com/600x400/?cappuccino,coffee'},
+  {name:'Latte',category:'Varm Dryck',desc:'Krämig latte med silkeslent mjölkskum, perfekt för en lugn stund.',img:'https://source.unsplash.com/600x400/?latte,coffee'},
+  {name:'Espresso',category:'Varm Dryck',desc:'Ren, intensiv espresso med kraftfull arom och smak.',img:'https://source.unsplash.com/600x400/?espresso,coffee'},
+  {name:'Islatte',category:'Kall Dryck',desc:'Kall brygd latte med is, len och uppfriskande på varma dagar.',img:'https://source.unsplash.com/600x400/?iced,latte'},
+  {name:'Frappé',category:'Kall Dryck',desc:'Kaffedrink blandad med is och mjölk – perfekt sommardryck.',img:'https://source.unsplash.com/600x400/?frappe,coffee'},
+  {name:'Varm Choklad',category:'Varm Dryck',desc:'Krämig varm choklad toppad med vispgrädde och chokladsås.',img:'https://source.unsplash.com/600x400/?hot,chocolate'},
+  {name:'Apelsinjuice',category:'Juice',desc:'Färskpressad apelsinjuice, rik på smak och energi.',img:'https://source.unsplash.com/600x400/?orange,juice'},
+  {name:'Äppeljuice',category:'Juice',desc:'Klar, fruktig och naturligt söt äppeljuice.',img:'https://source.unsplash.com/600x400/?apple,juice'},
+  {name:'Kycklingmacka',category:'Mat',desc:'Grillad kycklingmacka med fräscha grönsaker och aioli.',img:'https://source.unsplash.com/600x400/?chicken,sandwich'},
+  {name:'Croissant',category:'Mat',desc:'Smörig croissant – perfekt till kaffet.',img:'https://source.unsplash.com/600x400/?croissant'},
 ];
 
-let filteredPlayers = [...players];
-let activeIndex = 0;
-
+let filteredMenu = [...menu];
 const grid = document.getElementById('grid');
+const searchInput = document.getElementById('searchInput');
+const categoryFilter = document.getElementById('categoryFilter');
+const applyBtn = document.getElementById('applyBtn');
 const lightbox = document.getElementById('lightbox');
 const lbImage = document.getElementById('lbImage');
 const lbName = document.getElementById('lbName');
 const lbDesc = document.getElementById('lbDesc');
 const closeLB = document.getElementById('closeLB');
-const prevBtn = document.getElementById('prevBtn');
-const nextBtn = document.getElementById('nextBtn');
-const searchInput = document.getElementById('searchInput');
-const positionFilter = document.getElementById('positionFilter');
-const sortSelect = document.getElementById('sortSelect');
-const applyBtn = document.getElementById('applyBtn');
 
 function render(list){
   grid.innerHTML='';
-  list.forEach((player,i)=>{
+  list.forEach((item,i)=>{
     const card=document.createElement('div');
     card.className='card';
     card.innerHTML=`
-      <div class="rank">#${i+1}</div>
-      <img src="${player.img}" alt="${player.name}">
+      <img src="${item.img}" alt="${item.name}">
       <div class="body">
-        <h3>${player.name}</h3>
-        <p>${player.desc.substring(0,60)}...</p>
+        <h3>${item.name}</h3>
+        <p>${item.desc.substring(0,60)}...</p>
       </div>
     `;
-    card.addEventListener('click',()=>openLB(i));
+    card.addEventListener('click',()=>openLightbox(item));
     grid.appendChild(card);
-    setTimeout(()=>{ card.classList.add('show'); }, i*100);
   });
 }
 
-function openLB(index){
-  activeIndex=index;
-  const player=filteredPlayers[index];
-  lbImage.src=player.img;
-  lbName.textContent=player.name;
-  lbDesc.textContent=player.desc;
+function openLightbox(item){
+  lbImage.src=item.img;
+  lbName.textContent=item.name;
+  lbDesc.textContent=item.desc;
   lightbox.classList.add('show');
 }
-
 function closeLightbox(){ lightbox.classList.remove('show'); }
-function prev(){ activeIndex=(activeIndex-1+filteredPlayers.length)%filteredPlayers.length; openLB(activeIndex); }
-function next(){ activeIndex=(activeIndex+1)%filteredPlayers.length; openLB(activeIndex); }
-
-closeLB.addEventListener('click',closeLightbox);
-prevBtn.addEventListener('click',prev);
-nextBtn.addEventListener('click',next);
 
 applyBtn.addEventListener('click',()=>{
   const query=searchInput.value.toLowerCase();
-  filteredPlayers = players.filter(p=>{
-    return (p.name.toLowerCase().includes(query) || p.position.toLowerCase().includes(query))
-           && (positionFilter.value==='all' || p.position===positionFilter.value);
+  const cat=categoryFilter.value;
+  filteredMenu = menu.filter(p=>{
+    return (p.name.toLowerCase().includes(query) || p.desc.toLowerCase().includes(query))
+    && (cat==='all' || p.category===cat);
   });
-  if(sortSelect.value==='name') filteredPlayers.sort((a,b)=>a.name.localeCompare(b.name));
-  else if(sortSelect.value==='random') filteredPlayers.sort(()=>Math.random()-0.5);
-  render(filteredPlayers);
+  render(filteredMenu);
 });
 
-render(filteredPlayers);
+closeLB.addEventListener('click',closeLightbox);
+
+// Render initial
+render(menu);
 </script>
 
 </body>
 </html>
-<!DOCTYPE html>
-<html lang="sv">
+
 
 
 
