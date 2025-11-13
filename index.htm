@@ -8,43 +8,243 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>10 Bästa Fotbollsspelare</title>
 <style>
-  body { margin:0; font-family:'Inter',Arial,sans-serif; background:#000; color:#fff; }
-  header { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; padding:20px 30px; background:#111; border-bottom:1px solid #333; position:sticky; top:0; z-index:10; }
-  header h1 { font-size:1.8em; color:#fff; margin:0; }
-  .controls { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:10px; }
-  .controls input, .controls select { padding:8px 12px; border-radius:8px; border:1px solid #555; background:#111; color:#fff; outline:none; }
-  .controls button { padding:8px 15px; border:none; border-radius:8px; background:#fff; color:#000; font-weight:bold; cursor:pointer; transition:0.2s; }
-  .controls button:hover { background:#ccc; }
+  body {
+    margin:0;
+    font-family:'Inter',Arial,sans-serif;
+    background:#000;
+    color:#fff;
+    opacity:0;
+    animation: fadeInBody 1s ease forwards;
+  }
 
-  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:20px; padding:20px 30px; }
-  .card { position:relative; background:#111; border-radius:12px; overflow:hidden; box-shadow:0 4px 12px rgba(255,255,255,0.1); cursor:pointer; transition:transform 0.3s, box-shadow 0.3s, opacity 0.5s, transform 0.5s; opacity:0; transform:translateY(20px); }
+  @keyframes fadeInBody {
+    from { opacity:0; }
+    to { opacity:1; }
+  }
+
+  header {
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:space-between;
+    padding:20px 30px;
+    background:#111;
+    border-bottom:1px solid #333;
+    position:sticky;
+    top:0;
+    z-index:10;
+  }
+
+  header h1 {
+    font-size:1.8em;
+    color:#fff;
+    margin:0;
+  }
+
+  .controls {
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    align-items:center;
+    margin-top:10px;
+  }
+
+  .controls input,
+  .controls select {
+    padding:8px 12px;
+    border-radius:8px;
+    border:1px solid #555;
+    background:#111;
+    color:#fff;
+    outline:none;
+  }
+
+  .controls button {
+    padding:8px 15px;
+    border:none;
+    border-radius:8px;
+    background:#ffb703;
+    color:#000;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+  }
+
+  .controls button:hover { background:#ffd166; }
+
+  /* INTRO */
+  .intro {
+    text-align:center;
+    padding:80px 20px 20px;
+    background:linear-gradient(180deg,#111 0%,#000 100%);
+    animation: fadeSlideIn 1.5s ease forwards;
+  }
+
+  .intro h2 {
+    font-size:2.5em;
+    margin-bottom:10px;
+    color:#ffb703;
+    letter-spacing:1px;
+  }
+
+  .intro p {
+    font-size:1.2em;
+    color:#ccc;
+    max-width:600px;
+    margin:auto;
+  }
+
+  @keyframes fadeSlideIn {
+    from { opacity:0; transform:translateY(30px); }
+    to { opacity:1; transform:translateY(0); }
+  }
+
+  /* GRID */
+  .grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+    padding:20px 30px;
+  }
+
+  /* CARD */
+  .card {
+    position:relative;
+    background:#111;
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:0 4px 12px rgba(255,255,255,0.1);
+    cursor:pointer;
+    transition:transform 0.3s, box-shadow 0.3s, opacity 0.5s, transform 0.5s;
+    opacity:0;
+    transform:translateY(20px);
+  }
+
   .card.show { opacity:1; transform:translateY(0); }
-  .card:hover { transform:translateY(-6px); box-shadow:0 12px 24px rgba(255,255,255,0.2); }
 
-  .card img { width:100%; height:250px; object-fit:cover; transition:transform 0.3s; display:block; }
+  .card:hover {
+    transform:translateY(-6px);
+    box-shadow:0 12px 24px rgba(255,255,255,0.2);
+  }
+
+  .card img {
+    width:100%;
+    height:250px;
+    object-fit:cover;
+    transition:transform 0.3s;
+    display:block;
+  }
+
   .card:hover img { transform:scale(1.05); }
 
-  .card .body { padding:10px; }
-  .card h3 { margin:0; font-size:1.2em; color:#fff; }
-  .card p { font-size:0.9em; color:#ccc; margin-top:3px; }
+  .card .body {
+    padding:15px;
+  }
+
+  .card h3 {
+    margin:0;
+    font-size:1.2em;
+    color:#fff;
+  }
+
+  .card p {
+    font-size:0.9em;
+    color:#ccc;
+    margin-top:3px;
+  }
+
+  /* Rank / Medal */
+  .rank {
+    position:absolute;
+    top:10px;
+    left:10px;
+    background:rgba(255,255,255,0.15);
+    color:#fff;
+    padding:6px 10px;
+    border-radius:8px;
+    font-weight:bold;
+    font-size:1em;
+    backdrop-filter:blur(4px);
+    display:flex;
+    align-items:center;
+    gap:5px;
+  }
+
+  .rank.gold { background:linear-gradient(45deg,#ffd700,#b8860b); color:#000; }
+  .rank.silver { background:linear-gradient(45deg,#c0c0c0,#a9a9a9); color:#000; }
+  .rank.bronze { background:linear-gradient(45deg,#cd7f32,#8b4513); color:#000; }
 
   /* Lightbox */
-  .lightbox { display:flex; position:fixed; inset:0; background:rgba(0,0,0,0.95); justify-content:center; align-items:center; flex-direction:column; z-index:100; padding:20px; opacity:0; visibility:hidden; transform:scale(0.95); transition:opacity 0.3s ease, transform 0.3s ease, visibility 0.3s; }
+  .lightbox {
+    display:flex;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.95);
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    z-index:100;
+    padding:20px;
+    opacity:0;
+    visibility:hidden;
+    transform:scale(0.95);
+    transition:opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+  }
+
   .lightbox.show { opacity:1; visibility:visible; transform:scale(1); }
 
-  .lightbox img { max-width:90%; max-height:40%; border-radius:12px; margin-bottom:15px; box-shadow:0 8px 20px rgba(255,255,255,0.2); }
+  .lightbox img {
+    max-width:90%;
+    max-height:40%;
+    border-radius:12px;
+    margin-bottom:15px;
+    box-shadow:0 8px 20px rgba(255,255,255,0.2);
+  }
 
-  .lightbox .text-container { max-height:50vh; overflow-y:auto; width:90%; margin-bottom:15px; padding-right:10px; text-align:left; }
-  .lightbox h2 { color:#fff; margin-bottom:10px; font-size:2em; }
-  .lightbox p { color:#ccc; font-size:1em; line-height:1.6em; }
+  .lightbox .text-container {
+    max-height:50vh;
+    overflow-y:auto;
+    width:90%;
+    margin-bottom:15px;
+    padding-right:10px;
+    text-align:left;
+  }
+
+  .lightbox h2 {
+    color:#fff;
+    margin-bottom:10px;
+    font-size:2em;
+  }
+
+  .lightbox p {
+    color:#ccc;
+    font-size:1em;
+    line-height:1.6em;
+  }
 
   .lightbox .text-container::-webkit-scrollbar { width:8px; }
   .lightbox .text-container::-webkit-scrollbar-thumb { background:#555; border-radius:4px; }
   .lightbox .text-container::-webkit-scrollbar-track { background:#111; border-radius:4px; }
 
-  .lightbox .actions { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
-  .lightbox button { padding:10px 20px; border:none; border-radius:8px; background:#fff; color:#000; font-weight:bold; cursor:pointer; transition:0.2s; }
-  .lightbox button:hover { background:#ccc; }
+  .lightbox .actions {
+    display:flex;
+    gap:10px;
+    justify-content:center;
+    flex-wrap:wrap;
+  }
+
+  .lightbox button {
+    padding:10px 20px;
+    border:none;
+    border-radius:8px;
+    background:#ffb703;
+    color:#000;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.2s;
+  }
+
+  .lightbox button:hover { background:#ffd166; }
 
   @media(max-width:600px){
     .card img { height:180px; }
@@ -55,7 +255,7 @@
 <body>
 
 <header>
-  <h1>Fotbollsgaleri</h1>
+  <h1>Fotbollsgaleri – Topp 10</h1>
   <div class="controls">
     <input id="searchInput" placeholder="Sök spelare...">
     <select id="positionFilter">
@@ -67,14 +267,20 @@
     </select>
     <select id="sortSelect">
       <option value="name">Sortera: A–Ö</option>
-      <option value="random">Sortera: Slumpmässigt</option>
+      <option value="random">Slumpmässig ordning</option>
     </select>
     <button id="applyBtn">Visa</button>
   </div>
 </header>
 
+<section class="intro">
+  <h2>Top 10 genom tiderna</h2>
+  <p>Världens mest legendariska fotbollsspelare – de som format historien, inspirerat generationer och skapat oförglömliga ögonblick på planen.</p>
+</section>
+
 <div class="grid" id="grid"></div>
 
+<!-- Lightbox -->
 <div class="lightbox" id="lightbox">
   <img id="lbImage" src="" alt="Spelare">
   <div class="text-container">
@@ -90,16 +296,16 @@
 
 <script>
 const players = [
-  {name:'Lionel Messi',desc:'Lionel Messi, argentinsk superstjärna, anses av många vara den största fotbollsspelaren genom tiderna. Hans precision, dribblingar och målskytte är enastående. Messi började sin karriär i FC Barcelona och har vunnit otaliga titlar, inklusive flera Ballon d\'Or. Han är känd för sin ödmjukhet, hårda arbetsmoral och sin förmåga att inspirera unga spelare. Under sin tid i PSG fortsätter han att visa magi på planen med en balans mellan snabbhet, kreativitet och mål. Messi har även representerat Argentina och lett dem till Copa America och VM-finaler, vilket cementerar hans status som legend i sporten.',position:'Forward',img:'https://source.unsplash.com/600x400/?lionel,messi,football'},
-  {name:'Cristiano Ronaldo',desc:'Cristiano Ronaldo, portugisisk superstjärna och målkung, har spelat i klubbar som Manchester United, Real Madrid och Juventus. Känd för sin snabbhet, styrka och fantastiska huvudspel, har han satt rekord för flest mål i Champions League och för sitt landslag. Ronaldo är också känd för sin disciplin, sin fysiska kondition och sin förmåga att prestera under press. Hans professionalism och beslutsamhet har inspirerat miljontals unga fotbollsspelare världen över.',position:'Forward',img:'https://source.unsplash.com/600x400/?cristiano,ronaldo,football'},
-  {name:'Pelé',desc:'Pelé, brasiliansk legend och en av fotbollens största ikoner, vann tre VM-titlar under sin karriär. Känd för sin snabbhet, teknik och intelligens på planen, har han satt standarden för framtida generationer. Hans namn är synonymt med framgång och elegans på fotbollsplanen. Pelé har också arbetat som ambassadör för sporten, spridit fotbollens popularitet globalt och inspirerat generationer med sin passion och skicklighet.',position:'Forward',img:'https://source.unsplash.com/600x400/?pele,football'},
-  {name:'Diego Maradona',desc:'Diego Maradona, argentinsk ikon, är känd för sin otroliga dribbling, kreativitet och det berömda målet ”Guds hand”. Hans karriär inkluderar framgångar med Napoli och Argentinas landslag. Maradonas vision, teknik och passion gjorde honom till en av de mest älskade spelarna någonsin. Trots kontroverser utanför planen kommer hans bidrag till fotbollen alltid att bli ihågkommet, och han är en inspirationskälla för spelare över hela världen.',position:'Mittfältare',img:'https://source.unsplash.com/600x400/?maradona,football'},
-  {name:'Zinedine Zidane',desc:'Zinedine Zidane, fransk mittfältare, är känd för sin eleganta spelstil och taktiska intelligens. Han vann VM 1998 och EM 2000 med Frankrike samt Champions League som spelare och tränare med Real Madrid. Zidane är känd för sina avgörande mål, kreativa passningar och lugn under press. Hans bidrag till fotbollen har gjort honom till en symbol för professionalism och klass på högsta nivå.',position:'Mittfältare',img:'https://source.unsplash.com/600x400/?zidane,football'},
-  {name:'Ronaldinho',desc:'Ronaldinho, brasiliansk superstjärna och trollkarl på planen, är känd för sin teknik, kreativitet och glädje. Han spelade i Barcelona och Milan, och hans dribblingar och fria sparkar har blivit ikoniska. Ronaldinho inspirerar fortfarande spelare världen över med sin lekfullhet och skicklighet. Hans karisma, leende och passion för spelet gör honom till en av fotbollens mest älskade figurer.',position:'Mittfältare',img:'https://source.unsplash.com/600x400/?ronaldinho,football'},
-  {name:'Johan Cruyff',desc:'Johan Cruyff, holländsk legend, revolutionerade fotbollen med totalfotboll. Han var känd för sin intelligens på planen, teknik och ledarskap. Cruyff spelade för Ajax och Barcelona och bidrog till att forma modern fotboll både som spelare och tränare. Hans filosofi och sätt att tänka kring spelet fortsätter att inspirera tränare och spelare än idag.',position:'Mittfältare',img:'https://source.unsplash.com/600x400/?cruyff,football'},
-  {name:'Franz Beckenbauer',desc:'Franz Beckenbauer, tysk legend, känd som ”Kaiser”, var en elegant försvarare och mittfältare. Han vann VM både som spelare och tränare och revolutionerade rollen som sweeper. Beckenbauer kombinerade teknik, taktisk intelligens och ledarskap och blev en ikon i fotbollshistorien. Hans påverkan på sporten sträcker sig över flera generationer och hans arv lever vidare i modern fotboll.',position:'Försvarare',img:'https://source.unsplash.com/600x400/?beckenbauer,football'},
-  {name:'Michel Platini',desc:'Michel Platini, fransk mittfältare, var känd för sina mål, teknik och ledarskap. Under sin karriär vann han flera Ballon d\'Or och var avgörande för Frankrikes framgångar på 1980-talet. Platini var också känd för sin intelligens på planen och sin förmåga att skapa spel för sina medspelare. Hans arv och insatser inom fotbollen är fortfarande högt respekterade.',position:'Mittfältare',img:'https://source.unsplash.com/600x400/?platini,football'},
-  {name:'George Best',desc:'George Best, nordirisk stjärna, var känd för sin kreativitet, explosivitet och charm på planen. Han spelade för Manchester United och inspirerade med sina dribblingar och mål. Bests karisma och skicklighet gjorde honom till en av de mest älskade spelarna genom tiderna. Hans arv lever vidare som symbol för passion, talang och glädje i fotboll.',position:'Forward',img:'https://source.unsplash.com/600x400/?george,best,football'}
+  {name:'Lionel Messi',desc:'Lionel Messi, argentinsk superstjärna, anses av många vara den största fotbollsspelaren genom tiderna. Hans precision, dribblingar och målskytte är enastående. Messi började sin karriär i FC Barcelona och har vunnit otaliga titlar, inklusive flera Ballon d\'Or. Han är känd för sin ödmjukhet, hårda arbetsmoral och sin förmåga att inspirera unga spelare. Under sin tid i PSG fortsatte han att visa magi på planen med en balans mellan snabbhet, kreativitet och mål. Messi har även lett Argentina till Copa America och VM-guld 2022, vilket cementerar hans status som en levande legend.',position:'Forward',img:'https://source.unsplash.com/600x400/?lionel,messi,football'},
+  {name:'Cristiano Ronaldo',desc:'Cristiano Ronaldo, portugisisk målmaskin, har erövrat fotbollsvärlden med sin styrka, snabbhet och otroliga målproduktion. Han har spelat i Manchester United, Real Madrid, Juventus och Al Nassr. Ronaldo är känd för sin disciplin, sitt fokus och sin ständiga vilja att förbättras. Med fem Ballon d\'Or och otaliga rekord i Champions League är han en ikon för professionalism och prestation.',position:'Forward',img:'https://source.unsplash.com/600x400/?cristiano,ronaldo,football'},
+  {name:'Pelé',desc:'Pelé, den brasilianska legenden, vann tre VM-titlar – något ingen annan spelare har gjort. Hans otroliga teknik, spelförståelse och målmedvetenhet gjorde honom till en global symbol för fotbollens skönhet. Han gjorde över 1000 mål under sin karriär och var en ambassadör för sporten långt efter sin pensionering.',position:'Forward',img:'https://source.unsplash.com/600x400/?pele,football'},
+  {name:'Diego Maradona',desc:'Maradona, känd som ”El Diego”, trollband världen med sin teknik, passion och karisma. Hans solomål mot England 1986 betraktas som ett av tidernas bästa. Maradona ledde Napoli till osannolika triumfer i Serie A och är en symbol för fotbollens magi och mänsklighet.',position:'Mittfältare',img:'https://source.unsplash.com/600x400/?maradona,football'},
+  {name:'Zinedine Zidane',desc:'Zidane, en fransk mittfältare med otrolig elegans och lugn, var en mästare på bollkontroll och spelintelligens. Han vann VM 1998 och EM 2000 samt Champions League som både spelare och tränare. Hans prestationer på planen präglas av klass och effektivitet.',position:'Mittfältare',img:'https://source.unsplash.com/600x400/?zidane,football'},
+  {name:'Ronaldinho',desc:'Ronaldinho var ren glädje på en fotbollsplan. Hans dribblingar, leenden och spektakulära mål gjorde honom till en publikfavorit. Han vann Ballon d’Or 2005 och förde Barcelona till nya höjder. Ronaldinho påminde världen om att fotboll ska vara roligt.',position:'Mittfältare',img:'https://source.unsplash.com/600x400/?ronaldinho,football'},
+  {name:'Johan Cruyff',desc:'Cruyff revolutionerade fotbollen med sitt koncept av totalfotboll. Som spelare i Ajax och Barcelona inspirerade han en ny generation med sin intelligens, teknik och spelförståelse. Han formade också framtida lag som tränare och blev en filosof inom sporten.',position:'Mittfältare',img:'https://source.unsplash.com/600x400/?cruyff,football'},
+  {name:'Franz Beckenbauer',desc:'Beckenbauer, ”Der Kaiser”, var pionjären bakom den moderna mittbacken. Han kombinerade defensiv skicklighet med kreativt speluppbyggande. Som spelare och tränare vann han VM, vilket gör honom till en av de mest framgångsrika inom fotbollshistorien.',position:'Försvarare',img:'https://source.unsplash.com/600x400/?beckenbauer,football'},
+  {name:'Michel Platini',desc:'Platini var en strateg och artist på planen. Med sin passningsfot och sitt öga för mål ledde han Frankrike till segrar under 1980-talet. Hans intelligens och ledarskap gjorde honom till en symbol för fransk elegans inom fotboll.',position:'Mittfältare',img:'https://source.unsplash.com/600x400/?platini,football'},
+  {name:'George Best',desc:'George Best var fotbollens rockstjärna – en blandning av talang, charm och rebelliskhet. Hans tid i Manchester United visade dribblingar och mål av sällan skådad kvalitet. Trots en kortare karriär än många andra lever hans legend vidare.',position:'Forward',img:'https://source.unsplash.com/600x400/?george,best,football'}
 ];
 
 let filteredPlayers = [...players];
@@ -123,7 +329,12 @@ function render(list){
   list.forEach((player,i)=>{
     const card=document.createElement('div');
     card.className='card';
+    let rankClass='', medal='';
+    if(i===0){ rankClass='gold'; medal='🥇'; }
+    else if(i===1){ rankClass='silver'; medal='🥈'; }
+    else if(i===2){ rankClass='bronze'; medal='🥉'; }
     card.innerHTML=`
+      <div class="rank ${rankClass}">${medal || '#'+(i+1)}</div>
       <img src="${player.img}" alt="${player.name}">
       <div class="body">
         <h3>${player.name}</h3>
@@ -146,14 +357,8 @@ function openLB(index){
 }
 
 function closeLightbox(){ lightbox.classList.remove('show'); }
-function prev(){ 
-  activeIndex=(activeIndex-1+filteredPlayers.length)%filteredPlayers.length; 
-  openLB(activeIndex); 
-}
-function next(){ 
-  activeIndex=(activeIndex+1)%filteredPlayers.length; 
-  openLB(activeIndex); 
-}
+function prev(){ activeIndex=(activeIndex-1+filteredPlayers.length)%filteredPlayers.length; openLB(activeIndex); }
+function next(){ activeIndex=(activeIndex+1)%filteredPlayers.length; openLB(activeIndex); }
 
 closeLB.addEventListener('click',closeLightbox);
 prevBtn.addEventListener('click',prev);
@@ -177,6 +382,7 @@ render(filteredPlayers);
 </html>
 <!DOCTYPE html>
 <html lang="sv">
+
 
 
   
