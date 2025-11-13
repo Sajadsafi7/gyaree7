@@ -29,7 +29,7 @@
   .lightbox { display:flex; position:fixed; inset:0; background:rgba(2,6,23,0.95); justify-content:center; align-items:center; flex-direction:column; z-index:100; padding:20px; text-align:center; opacity:0; visibility:hidden; transform:scale(0.95); transition:opacity 0.3s ease, transform 0.3s ease, visibility 0.3s; }
   .lightbox.show { opacity:1; visibility:visible; transform:scale(1); }
   .lightbox img { max-width:90%; max-height:70%; border-radius:12px; margin-bottom:15px; box-shadow:0 8px 20px rgba(0,0,0,0.7); transition:transform 0.3s ease; }
-  .lightbox img.show-img { transform:scale(1); }
+  .lightbox img:hover { transform:scale(1.03); } /* subtil hover-zoom */
   .lightbox h2 { color:#ffb703; margin-bottom:10px; font-size:2em; }
   .lightbox p { color:#e6f0fb; max-width:700px; margin-bottom:20px; font-size:1em; line-height:1.4em; }
 
@@ -121,8 +121,6 @@ function render(list){
     `;
     card.addEventListener('click',()=>openLB(i));
     grid.appendChild(card);
-
-    // Entrance animation med delay
     setTimeout(()=>{ card.classList.add('show'); }, i*100);
   });
 }
@@ -163,7 +161,6 @@ render(filteredPlayers);
 </html>
 <!DOCTYPE html>
 <html lang="sv">
-<
 
   
 
