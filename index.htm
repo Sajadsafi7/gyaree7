@@ -6,128 +6,91 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bilportalen — Galleri</title>
+  <title>10 Bästa Spelare Genom Tiderna</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; background: #071224; color: #e6f0fb; }
-    header { padding: 10px 20px; background: #0b1724; display: flex; align-items: center; }
-    header h1 { margin: 0; font-size: 20px; }
-    .search-wrap { margin-left: auto; }
-    .search-wrap input { padding: 5px; width: 200px; }
-    .search-wrap button { padding: 5px; }
-    .controls { padding: 10px 20px; }
-    select { padding: 5px; margin-right: 10px; }
-    .grid { display: flex; flex-wrap: wrap; gap: 10px; padding: 0 20px; }
-    .card { background: #0b1724; border: 1px solid #1a2a3a; border-radius: 8px; width: 250px; cursor: pointer; }
-    .card img { width: 100%; height: 150px; object-fit: cover; border-bottom: 1px solid #1a2a3a; }
+    body { font-family: Arial, sans-serif; margin: 0; background: #111; color: #fff; }
+    header { padding: 20px; text-align: center; background: #222; }
+    header h1 { margin: 0; font-size: 28px; }
+    .grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; padding: 20px; }
+    .card { background: #222; border-radius: 10px; width: 250px; cursor: pointer; transition: transform 0.2s; }
+    .card:hover { transform: translateY(-5px); }
+    .card img { width: 100%; height: 200px; object-fit: cover; border-radius: 10px 10px 0 0; }
     .card .body { padding: 10px; }
-    .lightbox { display: none; position: fixed; inset: 0; background: rgba(2,6,23,0.9); align-items: center; justify-content: center; flex-direction: column; }
-    .lightbox img { max-width: 90%; max-height: 80%; border: 2px solid #fff; border-radius: 8px; }
-    .lightbox button { margin-top: 10px; padding: 5px 10px; cursor: pointer; }
+    .card h3 { margin: 5px 0; font-size: 18px; }
+    .lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; flex-direction: column; }
+    .lightbox img { max-width: 90%; max-height: 70%; border-radius: 10px; margin-bottom: 10px; }
+    .lightbox p { max-width: 600px; text-align: center; margin: 0 10px 10px 10px; }
+    .lightbox button { padding: 8px 15px; cursor: pointer; border: none; border-radius: 5px; background: #ffb703; color: #111; font-weight: bold; }
   </style>
 </head>
 <body>
 
 <header>
-  <h1>Bilportalen</h1>
-  <div class="search-wrap">
-    <input id="search" placeholder="Sök bil...">
-    <button id="btnSearch">Sök</button>
-  </div>
+  <h1>10 Bästa Fotbollsspelare Genom Tiderna</h1>
 </header>
-
-<div class="controls">
-  <select id="typeFilter">
-    <option value="all">Alla typer</option>
-    <option>Sedan</option>
-    <option>SUV</option>
-    <option>Sport</option>
-    <option>Pickup</option>
-    <option>Hatchback</option>
-    <option>Wagon</option>
-  </select>
-  <select id="fuelFilter">
-    <option value="any">Alla drivmedel</option>
-    <option>El</option>
-    <option>Hybrid</option>
-    <option>Bensin</option>
-    <option>Diesel</option>
-  </select>
-</div>
 
 <div class="grid" id="grid"></div>
 
 <div class="lightbox" id="lightbox">
-  <img id="lbImage" src="" alt="Bilbild">
-  <button id="closeLightbox">Stäng</button>
+  <img id="lbImage" src="" alt="Spelare">
+  <h3 id="lbName"></h3>
+  <p id="lbDesc"></p>
+  <button id="closeLB">Stäng</button>
 </div>
 
 <script>
-const cars = [
-  {name:'Toyota Corolla',type:'Sedan',fuel:'Hybrid',topspeed:180,img:'https://source.unsplash.com/400x300/?Toyota,Corolla,car'},
-  {name:'Ford F-150',type:'Pickup',fuel:'Bensin',topspeed:175,img:'https://source.unsplash.com/400x300/?Ford,F-150,truck'},
-  {name:'Volkswagen Golf',type:'Hatchback',fuel:'Bensin',topspeed:210,img:'https://source.unsplash.com/400x300/?Volkswagen,Golf,car'},
-  {name:'Tesla Model 3',type:'Sedan',fuel:'El',topspeed:233,img:'https://source.unsplash.com/400x300/?Tesla,Model-3,car'},
-  {name:'Porsche 911',type:'Sport',fuel:'Bensin',topspeed:330,img:'https://source.unsplash.com/400x300/?Porsche,911,sports-car'},
-  {name:'BMW X5',type:'SUV',fuel:'Bensin',topspeed:250,img:'https://source.unsplash.com/400x300/?BMW,X5,SUV'},
-  {name:'Mercedes C-Class',type:'Sedan',fuel:'Bensin',topspeed:240,img:'https://source.unsplash.com/400x300/?Mercedes,C-Class,car'},
-  {name:'Audi A4',type:'Sedan',fuel:'Bensin',topspeed:240,img:'https://source.unsplash.com/400x300/?Audi,A4,car'},
-  {name:'Toyota RAV4',type:'SUV',fuel:'Hybrid',topspeed:180,img:'https://source.unsplash.com/400x300/?Toyota,RAV4,SUV'},
-  {name:'Ferrari F8 Tributo',type:'Sport',fuel:'Bensin',topspeed:340,img:'https://source.unsplash.com/400x300/?Ferrari,F8,car'}
+const players = [
+  {name:'Lionel Messi',desc:'Argentinsk superstjärna, känd för sin teknik och målskytte.',img:'https://source.unsplash.com/400x300/?lionel,messi,football'},
+  {name:'Cristiano Ronaldo',desc:'Portugisisk målmaskin, snabb och extremt stark i luften.',img:'https://source.unsplash.com/400x300/?cristiano,ronaldo,football'},
+  {name:'Pelé',desc:'Brasiliansk legend, vann tre VM-titlar och anses av många som den största.',img:'https://source.unsplash.com/400x300/?pele,football'},
+  {name:'Diego Maradona',desc:'Argentinsk ikon, känd för sin “Guds hand” och fantastiska dribblingar.',img:'https://source.unsplash.com/400x300/?maradona,football'},
+  {name:'Zinedine Zidane',desc:'Fransk mittfältare, elegant spelstil och avgörande i stora matcher.',img:'https://source.unsplash.com/400x300/?zidane,football'},
+  {name:'Ronaldinho',desc:'Brasiliansk trollkarl, briljant dribbling och kreativitet.',img:'https://source.unsplash.com/400x300/?ronaldinho,football'},
+  {name:'Johan Cruyff',desc:'Holländsk legend, känd för totalfotboll och intelligens på planen.',img:'https://source.unsplash.com/400x300/?cruyff,football'},
+  {name:'Franz Beckenbauer',desc:'Tysk försvarsspelare och mittfältare, elegant och taktiskt geni.',img:'https://source.unsplash.com/400x300/?beckenbauer,football'},
+  {name:'Michel Platini',desc:'Fransk mittfältare, känd för sina mål och ledarskap.',img:'https://source.unsplash.com/400x300/?platini,football'},
+  {name:'George Best',desc:'Nordirisk stjärna, kreativ och explosiv med en unik spelstil.',img:'https://source.unsplash.com/400x300/?george,best,football'}
 ];
 
 const grid = document.getElementById('grid');
 const lightbox = document.getElementById('lightbox');
 const lbImage = document.getElementById('lbImage');
+const lbName = document.getElementById('lbName');
+const lbDesc = document.getElementById('lbDesc');
+const closeLB = document.getElementById('closeLB');
 
 function render(list) {
   grid.innerHTML = '';
-  list.forEach(car => {
+  list.forEach(player => {
     const card = document.createElement('div');
     card.className = 'card';
     card.innerHTML = `
-      <img src="${car.img}" alt="${car.name}">
+      <img src="${player.img}" alt="${player.name}">
       <div class="body">
-        <h3>${car.name}</h3>
-        <p>${car.type} - ${car.fuel}</p>
-        <p>Top ${car.topspeed} km/h</p>
+        <h3>${player.name}</h3>
       </div>
     `;
-    card.addEventListener('click', () => openLightbox(car.img));
+    card.addEventListener('click', () => openLB(player));
     grid.appendChild(card);
   });
 }
 
-function openLightbox(src) {
-  lbImage.src = src;
+function openLB(player) {
+  lbImage.src = player.img;
+  lbName.textContent = player.name;
+  lbDesc.textContent = player.desc;
   lightbox.style.display = 'flex';
 }
 
-document.getElementById('closeLightbox').addEventListener('click', () => lightbox.style.display = 'none');
+closeLB.addEventListener('click', () => lightbox.style.display = 'none');
 
-function filterCars() {
-  const type = document.getElementById('typeFilter').value;
-  const fuel = document.getElementById('fuelFilter').value;
-  const query = document.getElementById('search').value.toLowerCase();
-  const filtered = cars.filter(c =>
-    (type === 'all' || c.type === type) &&
-    (fuel === 'any' || c.fuel === fuel) &&
-    (c.name.toLowerCase().includes(query))
-  );
-  render(filtered);
-}
-
-document.getElementById('btnSearch').addEventListener('click', filterCars);
-document.getElementById('typeFilter').addEventListener('change', filterCars);
-document.getElementById('fuelFilter').addEventListener('change', filterCars);
-
-render(cars);
+render(players);
 </script>
 
 </body>
 </html>
 <!DOCTYPE html>
 <html lang="sv">
-<head>
-  
+
 <head>
   
