@@ -4,10 +4,10 @@
        <h1><!doctype html>
 <html lang="sv">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Bilportalen — Proffsigt galleri med bilder</title>
-  <meta name="description" content="Stor, professionell bilportal med högkvalitativa bilder, detaljsidor och sök/filter. Byggd i HTML/CSS/JavaScript." />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bilportalen — Professionell bildgalleri med karusell</title>
+  <meta name="description" content="Stor, professionell bilportal med högkvalitativa bilder, karusell för flera bilder per bil, detaljsidor och sök/filter. Byggd i HTML/CSS/JavaScript.">
   <style>
     :root{--bg:#071224;--card:#0b1724;--muted:#9fb0c7;--accent:#ffb703}
     *{box-sizing:border-box}
@@ -18,11 +18,9 @@
     .search-wrap{display:flex;gap:10px;align-items:center;margin-left:auto}
     .search-wrap input{padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.02);color:inherit;width:360px}
     .search-wrap button{padding:10px 14px;border-radius:10px;border:none;background:var(--accent);color:#061022;font-weight:700;cursor:pointer}
-
     .container{max-width:1200px;margin:18px auto;padding:0 20px}
     .controls{display:flex;gap:12px;align-items:center;margin-bottom:14px}
     select{padding:8px 10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit}
-
     .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
     .card{background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.03);cursor:pointer;transition:transform .18s ease,box-shadow .18s ease}
     .card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(2,6,23,0.6)}
@@ -32,200 +30,137 @@
     .card h3{margin:0;font-size:16px}
     .meta{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
     .tag{font-size:12px;padding:6px 8px;border-radius:8px;background:rgba(255,255,255,0.02);color:var(--muted)}
-
     aside.info{margin-top:14px;padding:14px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border:1px solid rgba(255,255,255,0.02)}
-
-    /* Lightbox */
     .lightbox{position:fixed;inset:0;background:rgba(2,6,23,0.85);display:none;align-items:center;justify-content:center;padding:18px;z-index:60}
     .lightbox.open{display:flex}
     .lb-content{width:min(1100px,98%);max-width:1100px;background:#071428;border-radius:12px;padding:12px;display:grid;grid-template-columns:1fr 320px;gap:12px;align-items:start}
     .lb-main img{width:100%;height:520px;object-fit:contain;border-radius:10px;background:#081428}
     .lb-side{padding:8px;color:var(--muted);font-size:14px}
-    .lb-actions{display:flex;gap:8px;margin-top:10px}
+    .lb-actions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
     .btn{padding:8px 10px;border-radius:8px;border:none;background:var(--accent);color:#061022;font-weight:700;cursor:pointer}
     .ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted)}
-
+    .carousel-controls{display:flex;gap:6px;margin-top:6px}
     @media (max-width:1000px){.lb-content{grid-template-columns:1fr} .lb-main img{height:320px}}
   </style>
 </head>
 <body>
-  <header>
-    <div class="logo">B</div>
-    <div>
-      <h1>Bilportalen</h1>
-      <div style="font-size:13px;color:var(--muted)">Proffsig visning med högkvalitativa bilder och detaljer</div>
-    </div>
-    <div class="search-wrap">
-      <input id="globalSearch" placeholder="Sök bil, modell eller egenskap..." />
-      <button id="globalSearchBtn">Sök</button>
-    </div>
-  </header>
-
-  <div class="container">
-    <div class="controls">
-      <select id="typeFilter"><option value="all">Alla typer</option><option>Sedan</option><option>SUV</option><option>Sport</option><option>Pickup</option><option>Hatchback</option><option>Wagon</option></select>
-      <select id="fuelFilter"><option value="any">Alla drivmedel</option><option>El</option><option>Hybrid</option><option>Bensin</option><option>Diesel</option></select>
-      <select id="sortBy"><option value="popularity">Sortera: Populär</option><option value="topspeed">Topphastighet</option><option value="accel">0–100 km/h</option></select>
-      <div style="margin-left:auto;color:var(--muted)" id="count">20 modeller</div>
-    </div>
-
-    <section>
-      <div class="grid" id="grid"></div>
-    </section>
-
-    <aside class="info">
-      <h3>Tips för bättre bilder</h3>
-      <ul style="color:var(--muted)">
-        <li>Använd högupplösta bilder (min 1200px bred) för ljusa skärmar.</li>
-        <li>Spara bilder med webp om möjligt för bättre komprimering.</li>
-        <li>Namnge bilder med slug (t.ex. <code>toyota_corolla.jpg</code>) och lägg i mappen <code>/images</code>.</li>
-      </ul>
-      <hr style="border:none;border-top:1px solid rgba(255,255,255,0.03);margin:12px 0" />
-      <h4>Vill du ha hjälp?</h4>
-      <div style="color:var(--muted)">Säg till så kan jag skapa en zip med bilder eller generera exakta Unsplash‑länkar att ladda ner.</div>
-    </aside>
+<header>
+  <div class="logo">B</div>
+  <div>
+    <h1>Bilportalen</h1>
+    <div style="font-size:13px;color:var(--muted)">Proffsig visning med högkvalitativa bilder och karusell</div>
   </div>
-
-  <div class="lightbox" id="lightbox">
-    <div class="lb-content" role="dialog" aria-modal="true">
-      <div class="lb-main" id="lbMain">
-        <img id="lbImage" src="" alt="Bilbild" />
+  <div class="search-wrap">
+    <input id="globalSearch" placeholder="Sök bil, modell eller egenskap..." />
+    <button id="globalSearchBtn">Sök</button>
+  </div>
+</header>
+<div class="container">
+  <div class="controls">
+    <select id="typeFilter"><option value="all">Alla typer</option><option>Sedan</option><option>SUV</option><option>Sport</option><option>Pickup</option><option>Hatchback</option><option>Wagon</option></select>
+    <select id="fuelFilter"><option value="any">Alla drivmedel</option><option>El</option><option>Hybrid</option><option>Bensin</option><option>Diesel</option></select>
+    <select id="sortBy"><option value="popularity">Sortera: Populär</option><option value="topspeed">Topphastighet</option><option value="accel">0–100 km/h</option></select>
+    <div style="margin-left:auto;color:var(--muted)" id="count">20 modeller</div>
+  </div>
+  <section>
+    <div class="grid" id="grid"></div>
+  </section>
+  <aside class="info">
+    <h3>Instruktioner</h3>
+    <ul style="color:var(--muted)">
+      <li>Högupplösta bilder i /images, filnamn enligt slug, t.ex. toyota_corolla1.jpg, toyota_corolla2.jpg</li>
+      <li>Varje bil kan ha flera bilder för karusell i lightbox.</li>
+    </ul>
+  </aside>
+</div>
+<div class="lightbox" id="lightbox">
+  <div class="lb-content" role="dialog" aria-modal="true">
+    <div class="lb-main">
+      <img id="lbImage" src="" alt="Bilbild" />
+      <div class="carousel-controls">
+        <button id="prevImage" class="ghost">Föregående bild</button>
+        <button id="nextImage" class="ghost">Nästa bild</button>
       </div>
-      <div class="lb-side">
-        <h2 id="lbTitle">Titel</h2>
-        <p id="lbDesc" style="color:var(--muted)"></p>
-        <div style="margin-top:6px;font-size:14px"><strong>Specifikationer</strong></div>
-        <div id="lbSpecs" style="color:var(--muted);margin-top:6px"></div>
-        <div class="lb-actions">
-          <button id="prevBtn" class="ghost">Föregående</button>
-          <button id="nextBtn" class="ghost">Nästa</button>
-          <button id="closeLightbox" class="btn">Stäng</button>
+    </div>
+    <div class="lb-side">
+      <h2 id="lbTitle">Titel</h2>
+      <p id="lbDesc" style="color:var(--muted)"></p>
+      <div style="margin-top:6px;font-size:14px"><strong>Specifikationer</strong></div>
+      <div id="lbSpecs" style="color:var(--muted);margin-top:6px"></div>
+      <div class="lb-actions">
+        <button id="prevBtn" class="ghost">Föregående bil</button>
+        <button id="nextBtn" class="ghost">Nästa bil</button>
+        <button id="closeLightbox" class="btn">Stäng</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+const cars=[
+  {slug:'toyota_corolla',name:'Toyota Corolla',type:'Sedan',fuel:'Hybrid',power:'139 hp',topspeed:180,accel:9.5,images:['images/toyota_corolla1.jpg','images/toyota_corolla2.jpg'],desc:'Pålitlig och bränslesnål familjesedan.'},
+  {slug:'ford_f150',name:'Ford F-150',type:'Pickup',fuel:'Bensin',power:'400 hp',topspeed:175,accel:7.8,images:['images/ford_f1501.jpg','images/ford_f1502.jpg'],desc:'Arbets- och fritidspickup med hög kapacitet.'}
+  // Lägg till fler bilar med flera bilder...
+];
+
+const grid=document.getElementById('grid');
+const countEl=document.getElementById('count');
+const lightbox=document.getElementById('lightbox');
+const lbImage=document.getElementById('lbImage');
+const lbTitle=document.getElementById('lbTitle');
+const lbDesc=document.getElementById('lbDesc');
+const lbSpecs=document.getElementById('lbSpecs');
+let activeIndex=0;
+let activeImageIndex=0;
+
+function render(list){
+  grid.innerHTML='';
+  countEl.textContent=list.length+' modeller';
+  list.forEach((car,i)=>{
+    const card=document.createElement('article');
+    card.className='card';
+    card.innerHTML=`
+      <div class="img"><img src="${car.images[0]}" alt="${car.name}"></div>
+      <div class="body">
+        <h3>${car.name}</h3>
+        <div class="meta">
+          <div><span class="tag">${car.type}</span> <span class="tag">${car.fuel}</span></div>
+          <div style="text-align:right"><div style="font-weight:700">Top ${car.topspeed} km/h</div><div style="font-size:12px;color:var(--muted)">0–100: ${car.accel}s</div></div>
         </div>
       </div>
-    </div>
-  </div>
+    `;
+    card.addEventListener('click',()=>openLightbox(i));
+    grid.appendChild(card);
+  });
+}
 
-  <script>
-    // Data: varje bil har en lokal bild-filnamn (rekommenderad) och fallback Unsplash-url
-    const cars = [
-      {slug:'toyota_corolla',name:'Toyota Corolla',type:'Sedan',fuel:'Hybrid',power:'139 hp',topspeed:180,accel:9.5,imgLocal:'images/toyota_corolla.jpg',imgFallback:'https://source.unsplash.com/1600x900/?Toyota%20Corolla,car',desc:'Pålitlig, bränslesnål och mycket populär globalt.'},
-      {slug:'ford_f150',name:'Ford F-150',type:'Pickup',fuel:'Bensin',power:'400 hp',topspeed:175,accel:7.8,imgLocal:'images/ford_f150.jpg',imgFallback:'https://source.unsplash.com/1600x900/?Ford%20F-150,truck',desc:'Robust pickup, vanlig i nordamerika.'},
-      {slug:'vw_golf',name:'Volkswagen Golf',type:'Hatchback',fuel:'Bensin',power:'150 hp',topspeed:210,accel:8.5,imgLocal:'images/vw_golf.jpg',imgFallback:'https://source.unsplash.com/1600x900/?Volkswagen%20Golf,car',desc:'Kompakt och mångsidig klassiker.'},
-      {slug:'honda_civic',name:'Honda Civic',type:'Sedan',fuel:'Bensin',power:'158 hp',topspeed:205,accel:8.2,imgLocal:'images/honda_civic.jpg',imgFallback:'https://source.unsplash.com/1600x900/?Honda%20Civic,car',desc:'Sportig kompakt med gott rykte.'},
-      {slug:'tesla_model3',name:'Tesla Model 3',type:'Sedan',fuel:'El',power:'258-480 hp',topspeed:233,accel:3.3,imgLocal:'images/tesla_model3.jpg',imgFallback:'https://source.unsplash.com/1600x900/?Tesla%20Model%203,tesla',desc:'Populär elbil med imponerande räckvidd.'},
-      {slug:'bmw_3',name:'BMW 3 Series',type:'Sedan',fuel:'Bensin',power:'255-382 hp',topspeed:250,accel:4.4,imgLocal:'images/bmw_3.jpg',imgFallback:'https://source.unsplash.com/1600x900/?BMW%203%20Series,car',desc:'Premium-sedan med sportiga gener.'},
-      {slug:'mercedes_c',name:'Mercedes C-Class',type:'Sedan',fuel:'Bensin',power:'255-375 hp',topspeed:250,accel:4.9,imgLocal:'images/mercedes_c.jpg',imgFallback:'https://source.unsplash.com/1600x900/?Mercedes%20C%20Class,car',desc:'Lyx och teknik i kompakt paket.'},
-      {slug:'audi_a4',name:'Audi A4',type:'Sedan',fuel:'Bensin',power:'201 hp',topspeed:240,accel:6.8,imgLocal:'images/audi_a4.jpg',imgFallback:'https://source.unsplash.com/1600x900/?Audi%20A4,car',desc:'Känd för byggkvalitet och körning.'},
-      {slug:'toyota_rav4',name:'Toyota RAV4',type:'SUV',fuel:'Hybrid',power:'203 hp',topspeed:180,accel:8.4,imgLocal:'images/toyota_rav4.jpg',imgFallback:'https://source.unsplash.com/1600x900/?Toyota%20RAV4,SUV',desc:'Praktisk SUV med bra ekonomi.'},
-      {slug:'honda_crv',name:'Honda CR-V',type:'SUV',fuel:'Hybrid',power:'190 hp',topspeed:185,accel:8.9,imgLocal:'images/honda_crv.jpg',imgFallback:'https://source.unsplash.com/1600x900/?Honda%20CR-V,SUV',desc:'Familjevänlig crossover.'},
-      {slug:'nissan_qashqai',name:'Nissan Qashqai',type:'SUV',fuel:'Bensin',power:'158 hp',topspeed:190,accel:9.8,imgLocal:'images/nissan_qashqai.jpg',imgFallback:'https://source.unsplash.com/1600x900/?Nissan%20Qashqai,SUV',desc:'Säljfavorit i Europa.'},
-      {slug:'chevy_silverado',name:'Chevrolet Silverado',type:'Pickup',fuel:'Bensin',power:'355 hp',topspeed:170,accel:7.9,imgLocal:'images/chevy_silverado.jpg',imgFallback:'https://source.unsplash.com/1600x900/?Chevrolet%20Silverado,truck',desc:'Stor pickup för tunga jobb.'},
-      {slug:'hyundai_tucson',name:'Hyundai Tucson',type:'SUV',fuel:'Hybrid',power:'180 hp',topspeed:195,accel:9.3,imgLocal:'images/hyundai_tucson.jpg',imgFallback:'https://source.unsplash.com/1600x900/?Hyundai%20Tucson,SUV',desc:'Modern crossover med bra valuta.'},
-      {slug:'kia_sportage',name:'Kia Sportage',type:'SUV',fuel:'Hybrid',power:'180 hp',topspeed:190,accel:9.4,imgLocal:'images/kia_sportage.jpg',imgFallback:'https://source.unsplash.com/1600x900/?Kia%20Sportage,SUV',desc:'Välutrustad och prisvärd.'},
-      {slug:'subaru_outback',name:'Subaru Outback',type:'Wagon',fuel:'Bensin',power:'182 hp',topspeed:200,accel:10.7,imgLocal:'images/subaru_outback.jpg',imgFallback:'https://source.unsplash.com/1600x900/?Subaru%20Outback,car',desc:'Kombi med fyrhjulsdrift och terrängförmåga.'},
-      {slug:'mazda_cx5',name:'Mazda CX-5',type:'SUV',fuel:'Bensin',power:'187 hp',topspeed:205,accel:8.7,imgLocal:'images/mazda_cx5.jpg',imgFallback:'https://source.unsplash.com/1600x900/?Mazda%20CX-5,SUV',desc:'Kroppsdesign och körglädje i fokus.'},
-      {slug:'porsche_911',name:'Porsche 911',type:'Sport',fuel:'Bensin',power:'379-640 hp',topspeed:330,accel:2.7,imgLocal:'images/porsche_911.jpg',imgFallback:'https://source.unsplash.com/1600x900/?Porsche%20911,sports%20car',desc:'Legend i sportbilsklassen.'},
-      {slug:'ferrari_f8',name:'Ferrari F8 Tributo',type:'Sport',fuel:'Bensin',power:'710 hp',topspeed:340,accel:2.9,imgLocal:'images/ferrari_f8.jpg',imgFallback:'https://source.unsplash.com/1600x900/?Ferrari%20F8,sports%20car',desc:'Superbil med extrem prestanda.'},
-      {slug:'lamborghini_huracan',name:'Lamborghini Huracan',type:'Sport',fuel:'Bensin',power:'602-631 hp',topspeed:325,accel:2.9,imgLocal:'images/lamborghini_huracan.jpg',imgFallback:'https://source.unsplash.com/1600x900/?Lamborghini%20Huracan,sports%20car',desc:'Dramatik och toppeffekt.'},
-      {slug:'volvo_xc60',name:'Volvo XC60',type:'SUV',fuel:'Hybrid',power:'250-400 hp',topspeed:230,accel:5.5,imgLocal:'images/volvo_xc60.jpg',imgFallback:'https://source.unsplash.com/1600x900/?Volvo%20XC60,SUV',desc:'Säker och komfortabel SUV från Volvo.'}
-    ];
+function openLightbox(index){
+  activeIndex=index;
+  activeImageIndex=0;
+  const car=cars[index];
+  lbImage.src=car.images[0];
+  lbTitle.textContent=car.name;
+  lbDesc.textContent=car.desc;
+  lbSpecs.innerHTML=`<p><strong>Typ:</strong>${car.type}</p><p><strong>Drivmedel:</strong>${car.fuel}</p><p><strong>Effekt:</strong>${car.power}</p><p><strong>Topphastighet:</strong>${car.topspeed} km/h</p><p><strong>0–100 km/h:</strong>${car.accel}s</p>`;
+  lightbox.classList.add('open');
+  document.body.style.overflow='hidden';
+}
 
-    const grid = document.getElementById('grid');
-    const countEl = document.getElementById('count');
-    const lightbox = document.getElementById('lightbox');
-    const lbImage = document.getElementById('lbImage');
-    const lbTitle = document.getElementById('lbTitle');
-    const lbDesc = document.getElementById('lbDesc');
-    const lbSpecs = document.getElementById('lbSpecs');
-    let activeIndex = 0;
+function closeLightbox(){lightbox.classList.remove('open');document.body.style.overflow='';}
+function prevCar(){activeIndex=(activeIndex-1+cars.length)%cars.length;openLightbox(activeIndex);}
+function nextCar(){activeIndex=(activeIndex+1)%cars.length;openLightbox(activeIndex);}
+function prevImage(){const car=cars[activeIndex];activeImageIndex=(activeImageIndex-1+car.images.length)%car.images.length;lbImage.src=car.images[activeImageIndex];}
+function nextImage(){const car=cars[activeIndex];activeImageIndex=(activeImageIndex+1)%car.images.length;lbImage.src=car.images[activeImageIndex];}
 
-    // Create cards with lazy-loading images; prefer local images if present, otherwise fallback to Unsplash
-    function render(list){
-      grid.innerHTML='';
-      countEl.textContent = list.length + ' modeller';
-      list.forEach((car, i) =>{
-        const card = document.createElement('article');
-        card.className='card';
-        const imgSrc = `${car.imgLocal}`;
-        const fallback = car.imgFallback;
-        card.innerHTML = `
-          <div class="img"><img loading=\"lazy\" src=\"${imgSrc}\" onerror=\"this.onerror=null;this.src='${fallback}';\" alt=\"${car.name}\"></div>
-          <div class=\"body\">
-            <h3>${car.name}</h3>
-            <div class=\"meta\">
-              <div><span class=\"tag\">${car.type}</span> <span class=\"tag\">${car.fuel}</span></div>
-              <div style=\"text-align:right\"><div style=\"font-weight:700\">Top ${car.topspeed} km/h</div><div style=\"font-size:12px;color:var(--muted)\">0–100: ${car.accel}s</div></div>
-            </div>
-          </div>
-        `;
-        card.addEventListener('click', ()=> openLightbox(i));
-        grid.appendChild(card);
-      });
-    }
+document.getElementById('closeLightbox').addEventListener('click',closeLightbox);
+document.getElementById('prevBtn').addEventListener('click',prevCar);
+document.getElementById('nextBtn').addEventListener('click',nextCar);
+document.getElementById('prevImage').addEventListener('click',prevImage);
+document.getElementById('nextImage').addEventListener('click',nextImage);
+lightbox.addEventListener('click',e=>{if(e.target===lightbox)closeLightbox();});
+window.addEventListener('keydown',e=>{if(e.key==='ArrowRight')nextImage();if(e.key==='ArrowLeft')prevImage();if(e.key==='Escape')closeLightbox();});
 
-    function openLightbox(index){
-      activeIndex = index;
-      const car = cars[index];
-      lbImage.src = car.imgLocal;
-      lbImage.onerror = function(){ lbImage.src = car.imgFallback; };
-      lbTitle.textContent = car.name;
-      lbDesc.textContent = car.desc;
-      lbSpecs.innerHTML = `
-        <p><strong>Typ:</strong> ${car.type}</p>
-        <p><strong>Drivmedel:</strong> ${car.fuel}</p>
-        <p><strong>Effekt:</strong> ${car.power}</p>
-        <p><strong>Topphastighet:</strong> ${car.topspeed} km/h</p>
-        <p><strong>0–100 km/h:</strong> ${car.accel} s</p>
-      `;
-      lightbox.classList.add('open');
-      document.body.style.overflow='hidden';
-    }
-
-    function closeLightbox(){ lightbox.classList.remove('open'); document.body.style.overflow=''; }
-    function prev(){ activeIndex = (activeIndex -1 + cars.length) % cars.length; openLightbox(activeIndex); }
-    function next(){ activeIndex = (activeIndex +1) % cars.length; openLightbox(activeIndex); }
-
-    document.getElementById('closeLightbox').addEventListener('click', closeLightbox);
-    document.getElementById('prevBtn').addEventListener('click', prev);
-    document.getElementById('nextBtn').addEventListener('click', next);
-    lightbox.addEventListener('click', (e)=>{ if(e.target === lightbox) closeLightbox(); });
-    window.addEventListener('keydown', (e)=>{ if(e.key==='ArrowRight') next(); if(e.key==='ArrowLeft') prev(); if(e.key==='Escape') closeLightbox(); });
-
-    // Filters and search
-    const typeFilter = document.getElementById('typeFilter');
-    const fuelFilter = document.getElementById('fuelFilter');
-    const sortBy = document.getElementById('sortBy');
-    const globalSearch = document.getElementById('globalSearch');
-    const globalSearchBtn = document.getElementById('globalSearchBtn');
-
-    function apply(){
-      const q = globalSearch.value.trim().toLowerCase();
-      const type = typeFilter.value;
-      const fuel = fuelFilter.value;
-      let result = cars.filter(c=>{
-        return (c.name.toLowerCase().includes(q) || c.desc.toLowerCase().includes(q) || c.type.toLowerCase().includes(q))
-          && (type==='all' || c.type===type)
-          && (fuel==='any' || c.fuel===fuel);
-      });
-      const s = sortBy.value;
-      if(s==='topspeed') result.sort((a,b)=>b.topspeed - a.topspeed);
-      if(s==='accel') result.sort((a,b)=>a.accel - b.accel);
-      render(result);
-    }
-
-    globalSearchBtn.addEventListener('click', apply);
-    globalSearch.addEventListener('input', apply);
-    typeFilter.addEventListener('change', apply);
-    fuelFilter.addEventListener('change', apply);
-    sortBy.addEventListener('change', apply);
-
-    // Initial render
-    render(cars);
-
-    // --- Image download helper (instructions shown in console) ---
-    console.log('För bästa bildkvalitet: ladda ner bilder i mappen /images med följande filnamn:');
-    cars.forEach(c=> console.log(c.slug + ' -> (sök och spara som) ' + c.imgFallback));
-  </script>
+render(cars);
+</script>
 </body>
 </html>
 <!doctype html>
