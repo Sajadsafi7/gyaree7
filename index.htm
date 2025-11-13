@@ -20,9 +20,9 @@
     .card { background: #0b1724; border: 1px solid #1a2a3a; border-radius: 8px; width: 250px; cursor: pointer; }
     .card img { width: 100%; height: 150px; object-fit: cover; border-bottom: 1px solid #1a2a3a; }
     .card .body { padding: 10px; }
-    .lightbox { display: none; position: fixed; inset: 0; background: rgba(2,6,23,0.9); align-items: center; justify-content: center; }
-    .lightbox img { max-width: 90%; max-height: 80%; }
-    .lightbox button { margin-top: 10px; padding: 5px 10px; }
+    .lightbox { display: none; position: fixed; inset: 0; background: rgba(2,6,23,0.9); align-items: center; justify-content: center; flex-direction: column; }
+    .lightbox img { max-width: 90%; max-height: 80%; border: 2px solid #fff; border-radius: 8px; }
+    .lightbox button { margin-top: 10px; padding: 5px 10px; cursor: pointer; }
   </style>
 </head>
 <body>
@@ -57,21 +57,22 @@
 <div class="grid" id="grid"></div>
 
 <div class="lightbox" id="lightbox">
-  <div>
-    <img id="lbImage" src="" alt="Bilbild">
-    <div>
-      <button id="closeLightbox">Stäng</button>
-    </div>
-  </div>
+  <img id="lbImage" src="" alt="Bilbild">
+  <button id="closeLightbox">Stäng</button>
 </div>
 
 <script>
 const cars = [
-  {name:'Toyota Corolla',type:'Sedan',fuel:'Hybrid',topspeed:180,img:'https://source.unsplash.com/250x150/?Toyota%20Corolla,car'},
-  {name:'Ford F-150',type:'Pickup',fuel:'Bensin',topspeed:175,img:'https://source.unsplash.com/250x150/?Ford%20F-150,truck'},
-  {name:'Volkswagen Golf',type:'Hatchback',fuel:'Bensin',topspeed:210,img:'https://source.unsplash.com/250x150/?Volkswagen%20Golf,car'},
-  {name:'Tesla Model 3',type:'Sedan',fuel:'El',topspeed:233,img:'https://source.unsplash.com/250x150/?Tesla%20Model%203,tesla'},
-  {name:'Porsche 911',type:'Sport',fuel:'Bensin',topspeed:330,img:'https://source.unsplash.com/250x150/?Porsche%20911,sports%20car'}
+  {name:'Toyota Corolla',type:'Sedan',fuel:'Hybrid',topspeed:180,img:'https://source.unsplash.com/400x300/?Toyota,Corolla,car'},
+  {name:'Ford F-150',type:'Pickup',fuel:'Bensin',topspeed:175,img:'https://source.unsplash.com/400x300/?Ford,F-150,truck'},
+  {name:'Volkswagen Golf',type:'Hatchback',fuel:'Bensin',topspeed:210,img:'https://source.unsplash.com/400x300/?Volkswagen,Golf,car'},
+  {name:'Tesla Model 3',type:'Sedan',fuel:'El',topspeed:233,img:'https://source.unsplash.com/400x300/?Tesla,Model-3,car'},
+  {name:'Porsche 911',type:'Sport',fuel:'Bensin',topspeed:330,img:'https://source.unsplash.com/400x300/?Porsche,911,sports-car'},
+  {name:'BMW X5',type:'SUV',fuel:'Bensin',topspeed:250,img:'https://source.unsplash.com/400x300/?BMW,X5,SUV'},
+  {name:'Mercedes C-Class',type:'Sedan',fuel:'Bensin',topspeed:240,img:'https://source.unsplash.com/400x300/?Mercedes,C-Class,car'},
+  {name:'Audi A4',type:'Sedan',fuel:'Bensin',topspeed:240,img:'https://source.unsplash.com/400x300/?Audi,A4,car'},
+  {name:'Toyota RAV4',type:'SUV',fuel:'Hybrid',topspeed:180,img:'https://source.unsplash.com/400x300/?Toyota,RAV4,SUV'},
+  {name:'Ferrari F8 Tributo',type:'Sport',fuel:'Bensin',topspeed:340,img:'https://source.unsplash.com/400x300/?Ferrari,F8,car'}
 ];
 
 const grid = document.getElementById('grid');
@@ -80,7 +81,7 @@ const lbImage = document.getElementById('lbImage');
 
 function render(list) {
   grid.innerHTML = '';
-  list.forEach((car, i) => {
+  list.forEach(car => {
     const card = document.createElement('div');
     card.className = 'card';
     card.innerHTML = `
@@ -100,6 +101,7 @@ function openLightbox(src) {
   lbImage.src = src;
   lightbox.style.display = 'flex';
 }
+
 document.getElementById('closeLightbox').addEventListener('click', () => lightbox.style.display = 'none');
 
 function filterCars() {
@@ -123,7 +125,9 @@ render(cars);
 
 </body>
 </html>
-<!doctype html>
+<!DOCTYPE html>
 <html lang="sv">
+<head>
+  
 <head>
   
