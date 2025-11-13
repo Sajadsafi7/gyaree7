@@ -12,7 +12,7 @@
   header { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; padding:20px 30px; background:#111; border-bottom:1px solid #333; position:sticky; top:0; z-index:10; }
   header h1 { font-size:1.8em; color:#fff; margin:0; }
   .controls { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:10px; }
-  .controls input, .controls select { padding:8px 12px; border-radius:8px; border:1px solid #555; outline:none; background:#111; color:#fff; }
+  .controls input, .controls select { padding:8px 12px; border-radius:8px; border:1px solid #555; background:#111; color:#fff; outline:none; }
   .controls button { padding:8px 15px; border:none; border-radius:8px; background:#fff; color:#000; font-weight:bold; cursor:pointer; transition:0.2s; }
   .controls button:hover { background:#ccc; }
 
@@ -24,20 +24,23 @@
   .card img { width:100%; height:250px; object-fit:cover; transition:transform 0.3s; display:block; }
   .card:hover img { transform:scale(1.05); }
 
-  .card .number { position:absolute; top:10px; left:10px; background:#fff; color:#000; font-weight:bold; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; z-index:2; font-size:1em; }
+  .card .body { padding:10px; }
+  .card h3 { margin:0; font-size:1.2em; color:#fff; }
+  .card p { font-size:0.9em; color:#ccc; margin-top:3px; }
 
-  .card .body { position:absolute; bottom:10px; left:10px; color:#fff; z-index:2; transition:transform 0.3s, opacity 0.3s; transform:translateY(20px); opacity:0; }
-  .card:hover .body { transform:translateY(0); opacity:1; }
-
-  .card h3 { margin:0; font-size:1.2em; text-decoration:underline; color:#fff; }
-  .card p { font-size:0.9em; color:#aaa; margin-top:3px; }
-
-  .lightbox { display:flex; position:fixed; inset:0; background:rgba(0,0,0,0.95); justify-content:center; align-items:center; flex-direction:column; z-index:100; padding:20px; text-align:center; opacity:0; visibility:hidden; transform:scale(0.95); transition:opacity 0.3s ease, transform 0.3s ease, visibility 0.3s; }
+  /* Lightbox */
+  .lightbox { display:flex; position:fixed; inset:0; background:rgba(0,0,0,0.95); justify-content:center; align-items:center; flex-direction:column; z-index:100; padding:20px; opacity:0; visibility:hidden; transform:scale(0.95); transition:opacity 0.3s ease, transform 0.3s ease, visibility 0.3s; }
   .lightbox.show { opacity:1; visibility:visible; transform:scale(1); }
 
-  .lightbox img { max-width:90%; max-height:50%; border-radius:12px; margin-bottom:15px; box-shadow:0 8px 20px rgba(255,255,255,0.2); transition:transform 0.3s ease; }
-  .lightbox h2 { color:#fff; margin-bottom:10px; font-size:2em; cursor:pointer; }
-  .lightbox p { color:#ccc; max-width:700px; margin-bottom:20px; font-size:1em; line-height:1.6em; text-align:left; }
+  .lightbox img { max-width:90%; max-height:40%; border-radius:12px; margin-bottom:15px; box-shadow:0 8px 20px rgba(255,255,255,0.2); }
+
+  .lightbox .text-container { max-height:50vh; overflow-y:auto; width:90%; margin-bottom:15px; padding-right:10px; text-align:left; }
+  .lightbox h2 { color:#fff; margin-bottom:10px; font-size:2em; }
+  .lightbox p { color:#ccc; font-size:1em; line-height:1.6em; }
+
+  .lightbox .text-container::-webkit-scrollbar { width:8px; }
+  .lightbox .text-container::-webkit-scrollbar-thumb { background:#555; border-radius:4px; }
+  .lightbox .text-container::-webkit-scrollbar-track { background:#111; border-radius:4px; }
 
   .lightbox .actions { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
   .lightbox button { padding:10px 20px; border:none; border-radius:8px; background:#fff; color:#000; font-weight:bold; cursor:pointer; transition:0.2s; }
@@ -52,7 +55,7 @@
 <body>
 
 <header>
-  <h1>Fotbollsgaleri – Topp 10</h1>
+  <h1>Fotbollsgaleri</h1>
   <div class="controls">
     <input id="searchInput" placeholder="Sök spelare...">
     <select id="positionFilter">
@@ -74,8 +77,10 @@
 
 <div class="lightbox" id="lightbox">
   <img id="lbImage" src="" alt="Spelare">
-  <h2 id="lbName"></h2>
-  <p id="lbDesc"></p>
+  <div class="text-container">
+    <h2 id="lbName"></h2>
+    <p id="lbDesc"></p>
+  </div>
   <div class="actions">
     <button id="prevBtn">Föregående</button>
     <button id="nextBtn">Nästa</button>
@@ -85,16 +90,16 @@
 
 <script>
 const players = [
-  {name:'Lionel Messi',desc:`Lionel Messi, argentinsk superstjärna, anses av många vara världens bästa spelare genom tiderna. Han började sin karriär i FC Barcelona där han vann otaliga titlar, inklusive Champions League och La Liga. Messi är känd för sin exceptionella dribbling, precision och förmåga att skapa målchanser ur ingenstans. Hans teknik, snabbhet och spelintelligens gör honom unik. Under åren har han vunnit flera Ballon d'Or och fortsatt att skriva historia med Paris Saint-Germain och Argentinas landslag, där han ledde sitt land till Copa America-seger och ett VM-guld. Messi är också känd för sin ödmjukhet, sitt engagemang för välgörenhet och sin inspiration till unga fotbollsspelare världen över.`,position:'Forward',img:'https://source.unsplash.com/600x400/?lionel,messi,football'},
-  {name:'Cristiano Ronaldo',desc:`Cristiano Ronaldo, portugisisk superstjärna, är känd för sin fysiska styrka, snabbhet och målskytte. Han har vunnit Champions League med både Manchester United och Real Madrid, samt mängder av inhemska titlar. Ronaldo är känd för sin disciplin, hårda träning och professionella inställning, vilket gjort honom till en av de mest framgångsrika spelarna i historien. Hans förmåga att göra mål från alla positioner, kombinera teknik med kraft och inspirera lagkamrater gör honom unik. Ronaldo har även flera Ballon d'Or och är en global ikon som påverkat fotbollen och sportvärlden på ett enormt sätt.`,position:'Forward',img:'https://source.unsplash.com/600x400/?cristiano,ronaldo,football'},
-  {name:'Pelé',desc:`Pelé, brasiliansk fotbollslegend, vann tre VM-titlar och revolutionerade sporten med sin spelstil. Han var känd för sina mål, kreativitet och spelintelligens. Pelé blev en global ikon och hjälpte Brasilien att bli ett dominant landslag under 1950–1970-talet. Hans arv påverkar fortfarande fotbollen och han anses ofta som den största spelaren genom tiderna.`,position:'Forward',img:'https://source.unsplash.com/600x400/?pele,football'},
-  {name:'Diego Maradona',desc:`Diego Maradona, argentinsk fotbollsikon, berömd för sin ”Guds hand” och briljanta dribblingar. Han ledde Argentina till VM-seger 1986 och spelade en betydande roll i Napoli. Maradona var känd för sin kreativitet, tekniska färdigheter och förmåga att avgöra stora matcher. Hans karisma och passion gjorde honom till en av sportens största legender.`,position:'Mittfältare',img:'https://source.unsplash.com/600x400/?maradona,football'},
-  {name:'Zinedine Zidane',desc:`Zinedine Zidane, fransk mittfältare, känd för sin elegans, teknik och avgörande prestationer i stora matcher. Han vann VM 1998 och EM 2000 med Frankrike, samt flera Champions League-titlar med Real Madrid. Zidane var skicklig på att skapa spel och målchanser, samt för sin förmåga att hålla laget organiserat.`,position:'Mittfältare',img:'https://source.unsplash.com/600x400/?zidane,football'},
-  {name:'Ronaldinho',desc:`Ronaldinho, brasiliansk mittfältare och trollkarl med bollen. Hans dribblingar, kreativitet och glädje på planen gjorde honom till en av de mest älskade spelarna någonsin. Han vann Champions League med Barcelona och var central i Brasiliens landslag, inklusive VM 2002. Ronaldinho inspirerade en generation unga spelare med sin teknik och karisma.`,position:'Mittfältare',img:'https://source.unsplash.com/600x400/?ronaldinho,football'},
-  {name:'Johan Cruyff',desc:`Johan Cruyff, holländsk legend, skapade totalfotboll och revolutionerade spelet. Han var känd för sin intelligens, kreativitet och ledarskap både som spelare och tränare. Cruyff påverkade Barcelona, Ajax och holländska landslaget enormt, och hans filosofi lever vidare i modern fotboll.`,position:'Mittfältare',img:'https://source.unsplash.com/600x400/?cruyff,football'},
-  {name:'Franz Beckenbauer',desc:`Franz Beckenbauer, tysk försvarsspelare och mittfältare, revolutionerade rollen som sweeper/libero. Han vann VM både som spelare och tränare och var känd för sitt eleganta spel, taktiska sinne och ledarskap. Beckenbauer anses vara en av de bästa försvararna genom tiderna.`,position:'Försvarare',img:'https://source.unsplash.com/600x400/?beckenbauer,football'},
-  {name:'Michel Platini',desc:`Michel Platini, fransk mittfältare och målskytt, känd för sin spelintelligens och ledarskap. Han vann flera EM-titlar och Ballon d'Or under sin karriär och är en av de mest framstående europeiska spelarna genom tiderna.`,position:'Mittfältare',img:'https://source.unsplash.com/600x400/?platini,football'},
-  {name:'George Best',desc:`George Best, nordirisk stjärna, känd för sin kreativitet, explosivitet och unika spelstil. Han briljerade i Manchester United och blev en global ikon under 1960–1970-talet. Best inspirerade generationer med sin teknik och karisma.`,position:'Forward',img:'https://source.unsplash.com/600x400/?george,best,football'}
+  {name:'Lionel Messi',desc:'Lionel Messi, argentinsk superstjärna, anses av många vara den största fotbollsspelaren genom tiderna. Hans precision, dribblingar och målskytte är enastående. Messi började sin karriär i FC Barcelona och har vunnit otaliga titlar, inklusive flera Ballon d\'Or. Han är känd för sin ödmjukhet, hårda arbetsmoral och sin förmåga att inspirera unga spelare. Under sin tid i PSG fortsätter han att visa magi på planen med en balans mellan snabbhet, kreativitet och mål. Messi har även representerat Argentina och lett dem till Copa America och VM-finaler, vilket cementerar hans status som legend i sporten.',position:'Forward',img:'https://source.unsplash.com/600x400/?lionel,messi,football'},
+  {name:'Cristiano Ronaldo',desc:'Cristiano Ronaldo, portugisisk superstjärna och målkung, har spelat i klubbar som Manchester United, Real Madrid och Juventus. Känd för sin snabbhet, styrka och fantastiska huvudspel, har han satt rekord för flest mål i Champions League och för sitt landslag. Ronaldo är också känd för sin disciplin, sin fysiska kondition och sin förmåga att prestera under press. Hans professionalism och beslutsamhet har inspirerat miljontals unga fotbollsspelare världen över.',position:'Forward',img:'https://source.unsplash.com/600x400/?cristiano,ronaldo,football'},
+  {name:'Pelé',desc:'Pelé, brasiliansk legend och en av fotbollens största ikoner, vann tre VM-titlar under sin karriär. Känd för sin snabbhet, teknik och intelligens på planen, har han satt standarden för framtida generationer. Hans namn är synonymt med framgång och elegans på fotbollsplanen. Pelé har också arbetat som ambassadör för sporten, spridit fotbollens popularitet globalt och inspirerat generationer med sin passion och skicklighet.',position:'Forward',img:'https://source.unsplash.com/600x400/?pele,football'},
+  {name:'Diego Maradona',desc:'Diego Maradona, argentinsk ikon, är känd för sin otroliga dribbling, kreativitet och det berömda målet ”Guds hand”. Hans karriär inkluderar framgångar med Napoli och Argentinas landslag. Maradonas vision, teknik och passion gjorde honom till en av de mest älskade spelarna någonsin. Trots kontroverser utanför planen kommer hans bidrag till fotbollen alltid att bli ihågkommet, och han är en inspirationskälla för spelare över hela världen.',position:'Mittfältare',img:'https://source.unsplash.com/600x400/?maradona,football'},
+  {name:'Zinedine Zidane',desc:'Zinedine Zidane, fransk mittfältare, är känd för sin eleganta spelstil och taktiska intelligens. Han vann VM 1998 och EM 2000 med Frankrike samt Champions League som spelare och tränare med Real Madrid. Zidane är känd för sina avgörande mål, kreativa passningar och lugn under press. Hans bidrag till fotbollen har gjort honom till en symbol för professionalism och klass på högsta nivå.',position:'Mittfältare',img:'https://source.unsplash.com/600x400/?zidane,football'},
+  {name:'Ronaldinho',desc:'Ronaldinho, brasiliansk superstjärna och trollkarl på planen, är känd för sin teknik, kreativitet och glädje. Han spelade i Barcelona och Milan, och hans dribblingar och fria sparkar har blivit ikoniska. Ronaldinho inspirerar fortfarande spelare världen över med sin lekfullhet och skicklighet. Hans karisma, leende och passion för spelet gör honom till en av fotbollens mest älskade figurer.',position:'Mittfältare',img:'https://source.unsplash.com/600x400/?ronaldinho,football'},
+  {name:'Johan Cruyff',desc:'Johan Cruyff, holländsk legend, revolutionerade fotbollen med totalfotboll. Han var känd för sin intelligens på planen, teknik och ledarskap. Cruyff spelade för Ajax och Barcelona och bidrog till att forma modern fotboll både som spelare och tränare. Hans filosofi och sätt att tänka kring spelet fortsätter att inspirera tränare och spelare än idag.',position:'Mittfältare',img:'https://source.unsplash.com/600x400/?cruyff,football'},
+  {name:'Franz Beckenbauer',desc:'Franz Beckenbauer, tysk legend, känd som ”Kaiser”, var en elegant försvarare och mittfältare. Han vann VM både som spelare och tränare och revolutionerade rollen som sweeper. Beckenbauer kombinerade teknik, taktisk intelligens och ledarskap och blev en ikon i fotbollshistorien. Hans påverkan på sporten sträcker sig över flera generationer och hans arv lever vidare i modern fotboll.',position:'Försvarare',img:'https://source.unsplash.com/600x400/?beckenbauer,football'},
+  {name:'Michel Platini',desc:'Michel Platini, fransk mittfältare, var känd för sina mål, teknik och ledarskap. Under sin karriär vann han flera Ballon d\'Or och var avgörande för Frankrikes framgångar på 1980-talet. Platini var också känd för sin intelligens på planen och sin förmåga att skapa spel för sina medspelare. Hans arv och insatser inom fotbollen är fortfarande högt respekterade.',position:'Mittfältare',img:'https://source.unsplash.com/600x400/?platini,football'},
+  {name:'George Best',desc:'George Best, nordirisk stjärna, var känd för sin kreativitet, explosivitet och charm på planen. Han spelade för Manchester United och inspirerade med sina dribblingar och mål. Bests karisma och skicklighet gjorde honom till en av de mest älskade spelarna genom tiderna. Hans arv lever vidare som symbol för passion, talang och glädje i fotboll.',position:'Forward',img:'https://source.unsplash.com/600x400/?george,best,football'}
 ];
 
 let filteredPlayers = [...players];
@@ -119,7 +124,6 @@ function render(list){
     const card=document.createElement('div');
     card.className='card';
     card.innerHTML=`
-      <div class="number">${i+1}</div>
       <img src="${player.img}" alt="${player.name}">
       <div class="body">
         <h3>${player.name}</h3>
@@ -132,7 +136,7 @@ function render(list){
   });
 }
 
-function openLB(index){ 
+function openLB(index){
   activeIndex=index;
   const player=filteredPlayers[index];
   lbImage.src=player.img;
@@ -173,8 +177,6 @@ render(filteredPlayers);
 </html>
 <!DOCTYPE html>
 <html lang="sv">
-<head>
-
 
 
   
