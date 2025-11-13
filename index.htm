@@ -4,24 +4,40 @@
        <h1><!DOCTYPE html>
 <html lang="sv">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>10 Bästa Spelare Genom Tiderna</title>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 0; background: #111; color: #fff; }
-    header { padding: 20px; text-align: center; background: #222; }
-    header h1 { margin: 0; font-size: 28px; }
-    .grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; padding: 20px; }
-    .card { background: #222; border-radius: 10px; width: 250px; cursor: pointer; transition: transform 0.2s; }
-    .card:hover { transform: translateY(-5px); }
-    .card img { width: 100%; height: 200px; object-fit: cover; border-radius: 10px 10px 0 0; }
-    .card .body { padding: 10px; }
-    .card h3 { margin: 5px 0; font-size: 18px; }
-    .lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; flex-direction: column; }
-    .lightbox img { max-width: 90%; max-height: 70%; border-radius: 10px; margin-bottom: 10px; }
-    .lightbox p { max-width: 600px; text-align: center; margin: 0 10px 10px 10px; }
-    .lightbox button { padding: 8px 15px; cursor: pointer; border: none; border-radius: 5px; background: #ffb703; color: #111; font-weight: bold; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>10 Bästa Fotbollsspelare Genom Tiderna</title>
+<style>
+  /* --- Grundläggande --- */
+  body { font-family: 'Arial', sans-serif; margin: 0; background: #0b1724; color: #e6f0fb; }
+  h1, h2 { margin: 0; }
+  a { text-decoration: none; color: inherit; }
+
+  /* --- Header --- */
+  header { background: #071224; padding: 25px 20px; text-align: center; border-bottom: 1px solid #1a2a3a; }
+  header h1 { font-size: 2.2em; color: #ffb703; }
+
+  /* --- Grid --- */
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; padding: 20px; }
+  .card { background: #0b1724; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.5); cursor: pointer; transition: transform 0.25s, box-shadow 0.25s; }
+  .card:hover { transform: translateY(-8px); box-shadow: 0 12px 24px rgba(0,0,0,0.7); }
+  .card img { width: 100%; height: 250px; object-fit: cover; }
+  .card .body { padding: 15px; }
+  .card h3 { font-size: 1.3em; margin-bottom: 8px; color: #ffb703; }
+  .card p { font-size: 0.9em; color: #9fb0c7; }
+
+  /* --- Lightbox --- */
+  .lightbox { display: none; position: fixed; inset: 0; background: rgba(2,6,23,0.95); justify-content: center; align-items: center; flex-direction: column; z-index: 100; padding: 20px; }
+  .lightbox img { max-width: 90%; max-height: 70%; border-radius: 12px; margin-bottom: 15px; }
+  .lightbox h2 { color: #ffb703; margin-bottom: 10px; }
+  .lightbox p { color: #e6f0fb; max-width: 700px; text-align: center; margin-bottom: 15px; }
+  .lightbox button { padding: 10px 25px; border: none; border-radius: 8px; background: #ffb703; color: #071224; font-weight: bold; cursor: pointer; transition: 0.25s; }
+  .lightbox button:hover { background: #e6a400; }
+
+  @media (max-width: 600px){
+    .card img { height: 180px; }
+  }
+</style>
 </head>
 <body>
 
@@ -33,23 +49,23 @@
 
 <div class="lightbox" id="lightbox">
   <img id="lbImage" src="" alt="Spelare">
-  <h3 id="lbName"></h3>
+  <h2 id="lbName"></h2>
   <p id="lbDesc"></p>
   <button id="closeLB">Stäng</button>
 </div>
 
 <script>
 const players = [
-  {name:'Lionel Messi',desc:'Argentinsk superstjärna, känd för sin teknik och målskytte.',img:'https://source.unsplash.com/400x300/?lionel,messi,football'},
-  {name:'Cristiano Ronaldo',desc:'Portugisisk målmaskin, snabb och extremt stark i luften.',img:'https://source.unsplash.com/400x300/?cristiano,ronaldo,football'},
-  {name:'Pelé',desc:'Brasiliansk legend, vann tre VM-titlar och anses av många som den största.',img:'https://source.unsplash.com/400x300/?pele,football'},
-  {name:'Diego Maradona',desc:'Argentinsk ikon, känd för sin “Guds hand” och fantastiska dribblingar.',img:'https://source.unsplash.com/400x300/?maradona,football'},
-  {name:'Zinedine Zidane',desc:'Fransk mittfältare, elegant spelstil och avgörande i stora matcher.',img:'https://source.unsplash.com/400x300/?zidane,football'},
-  {name:'Ronaldinho',desc:'Brasiliansk trollkarl, briljant dribbling och kreativitet.',img:'https://source.unsplash.com/400x300/?ronaldinho,football'},
-  {name:'Johan Cruyff',desc:'Holländsk legend, känd för totalfotboll och intelligens på planen.',img:'https://source.unsplash.com/400x300/?cruyff,football'},
-  {name:'Franz Beckenbauer',desc:'Tysk försvarsspelare och mittfältare, elegant och taktiskt geni.',img:'https://source.unsplash.com/400x300/?beckenbauer,football'},
-  {name:'Michel Platini',desc:'Fransk mittfältare, känd för sina mål och ledarskap.',img:'https://source.unsplash.com/400x300/?platini,football'},
-  {name:'George Best',desc:'Nordirisk stjärna, kreativ och explosiv med en unik spelstil.',img:'https://source.unsplash.com/400x300/?george,best,football'}
+  {name:'Lionel Messi',desc:'Argentinsk superstjärna, känd för sin teknik, dribblingar och målskytte. En av de mest framstående spelarna i historien.',img:'https://source.unsplash.com/600x400/?lionel,messi,football'},
+  {name:'Cristiano Ronaldo',desc:'Portugisisk målmaskin, snabb och extremt stark i luften. Känd för sitt professionella driv och målrekord.',img:'https://source.unsplash.com/600x400/?cristiano,ronaldo,football'},
+  {name:'Pelé',desc:'Brasiliansk legend, vann tre VM-titlar och anses av många som den största spelaren genom tiderna.',img:'https://source.unsplash.com/600x400/?pele,football'},
+  {name:'Diego Maradona',desc:'Argentinsk ikon, känd för sin ”Guds hand” och fantastiska dribblingar.',img:'https://source.unsplash.com/600x400/?maradona,football'},
+  {name:'Zinedine Zidane',desc:'Fransk mittfältare, elegant spelstil och avgörande i stora matcher.',img:'https://source.unsplash.com/600x400/?zidane,football'},
+  {name:'Ronaldinho',desc:'Brasiliansk trollkarl, briljant dribbling och kreativitet.',img:'https://source.unsplash.com/600x400/?ronaldinho,football'},
+  {name:'Johan Cruyff',desc:'Holländsk legend, känd för totalfotboll och intelligens på planen.',img:'https://source.unsplash.com/600x400/?cruyff,football'},
+  {name:'Franz Beckenbauer',desc:'Tysk försvarsspelare och mittfältare, elegant och taktiskt geni.',img:'https://source.unsplash.com/600x400/?beckenbauer,football'},
+  {name:'Michel Platini',desc:'Fransk mittfältare, känd för sina mål och ledarskap.',img:'https://source.unsplash.com/600x400/?platini,football'},
+  {name:'George Best',desc:'Nordirisk stjärna, kreativ och explosiv med en unik spelstil.',img:'https://source.unsplash.com/600x400/?george,best,football'}
 ];
 
 const grid = document.getElementById('grid');
@@ -68,6 +84,7 @@ function render(list) {
       <img src="${player.img}" alt="${player.name}">
       <div class="body">
         <h3>${player.name}</h3>
+        <p>${player.desc.substring(0, 60)}...</p>
       </div>
     `;
     card.addEventListener('click', () => openLB(player));
@@ -91,6 +108,8 @@ render(players);
 </html>
 <!DOCTYPE html>
 <html lang="sv">
+
+  
 
 <head>
   
