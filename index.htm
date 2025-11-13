@@ -6,43 +6,52 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>10 Bästa Fotbollsspelare Genom Tiderna</title>
+<title>10 Bästa Fotbollsspelare</title>
 <style>
-  /* --- Grundläggande --- */
-  body { font-family: 'Arial', sans-serif; margin: 0; background: #0b1724; color: #e6f0fb; }
-  h1, h2 { margin: 0; }
+  /* --- Grundstil --- */
+  body { margin:0; font-family: 'Inter', Arial, sans-serif; background:#0b1724; color:#e6f0fb; }
   a { text-decoration: none; color: inherit; }
 
   /* --- Header --- */
-  header { background: #071224; padding: 25px 20px; text-align: center; border-bottom: 1px solid #1a2a3a; }
-  header h1 { font-size: 2.2em; color: #ffb703; }
+  header { display:flex; align-items:center; justify-content:space-between; padding:20px 30px; background:#071224; border-bottom:1px solid #1a2a3a; position:sticky; top:0; z-index:10; }
+  header h1 { font-size:1.8em; color:#ffb703; margin:0; }
+  .search-bar { display:flex; gap:10px; }
+  .search-bar input { padding:8px 12px; border-radius:8px; border:none; outline:none; width:200px; }
+  .search-bar button { padding:8px 15px; border:none; border-radius:8px; background:#ffb703; color:#071224; font-weight:bold; cursor:pointer; transition:0.2s; }
+  .search-bar button:hover { background:#e6a400; }
 
   /* --- Grid --- */
-  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; padding: 20px; }
-  .card { background: #0b1724; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.5); cursor: pointer; transition: transform 0.25s, box-shadow 0.25s; }
-  .card:hover { transform: translateY(-8px); box-shadow: 0 12px 24px rgba(0,0,0,0.7); }
-  .card img { width: 100%; height: 250px; object-fit: cover; }
-  .card .body { padding: 15px; }
-  .card h3 { font-size: 1.3em; margin-bottom: 8px; color: #ffb703; }
-  .card p { font-size: 0.9em; color: #9fb0c7; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:20px; padding:20px 30px; }
+  .card { background:#0b1724; border-radius:12px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.5); cursor:pointer; transition:transform 0.3s, box-shadow 0.3s; }
+  .card:hover { transform:translateY(-6px); box-shadow:0 12px 24px rgba(0,0,0,0.7); }
+  .card img { width:100%; height:250px; object-fit:cover; transition:transform 0.3s; }
+  .card:hover img { transform: scale(1.05); }
+  .card .body { padding:15px; }
+  .card h3 { color:#ffb703; margin-bottom:5px; font-size:1.2em; }
+  .card p { font-size:0.9em; color:#9fb0c7; }
 
   /* --- Lightbox --- */
-  .lightbox { display: none; position: fixed; inset: 0; background: rgba(2,6,23,0.95); justify-content: center; align-items: center; flex-direction: column; z-index: 100; padding: 20px; }
-  .lightbox img { max-width: 90%; max-height: 70%; border-radius: 12px; margin-bottom: 15px; }
-  .lightbox h2 { color: #ffb703; margin-bottom: 10px; }
-  .lightbox p { color: #e6f0fb; max-width: 700px; text-align: center; margin-bottom: 15px; }
-  .lightbox button { padding: 10px 25px; border: none; border-radius: 8px; background: #ffb703; color: #071224; font-weight: bold; cursor: pointer; transition: 0.25s; }
-  .lightbox button:hover { background: #e6a400; }
+  .lightbox { display:none; position:fixed; inset:0; background:rgba(2,6,23,0.95); justify-content:center; align-items:center; flex-direction:column; z-index:100; padding:20px; }
+  .lightbox img { max-width:90%; max-height:70%; border-radius:12px; margin-bottom:15px; box-shadow:0 8px 20px rgba(0,0,0,0.7); }
+  .lightbox h2 { color:#ffb703; margin-bottom:10px; font-size:2em; text-align:center; }
+  .lightbox p { color:#e6f0fb; max-width:700px; text-align:center; margin-bottom:20px; font-size:1em; line-height:1.4em; }
+  .lightbox button { padding:10px 25px; border:none; border-radius:8px; background:#ffb703; color:#071224; font-weight:bold; cursor:pointer; transition:0.2s; }
+  .lightbox button:hover { background:#e6a400; }
 
-  @media (max-width: 600px){
-    .card img { height: 180px; }
+  @media(max-width:600px){
+    .card img { height:180px; }
+    header { flex-direction:column; gap:10px; align-items:flex-start; }
   }
 </style>
 </head>
 <body>
 
 <header>
-  <h1>10 Bästa Fotbollsspelare Genom Tiderna</h1>
+  <h1>Fotbollsgaleri</h1>
+  <div class="search-bar">
+    <input id="searchInput" placeholder="Sök spelare...">
+    <button id="searchBtn">Sök</button>
+  </div>
 </header>
 
 <div class="grid" id="grid"></div>
@@ -74,32 +83,40 @@ const lbImage = document.getElementById('lbImage');
 const lbName = document.getElementById('lbName');
 const lbDesc = document.getElementById('lbDesc');
 const closeLB = document.getElementById('closeLB');
+const searchInput = document.getElementById('searchInput');
+const searchBtn = document.getElementById('searchBtn');
 
-function render(list) {
+function render(list){
   grid.innerHTML = '';
   list.forEach(player => {
     const card = document.createElement('div');
-    card.className = 'card';
-    card.innerHTML = `
+    card.className='card';
+    card.innerHTML=`
       <img src="${player.img}" alt="${player.name}">
       <div class="body">
         <h3>${player.name}</h3>
-        <p>${player.desc.substring(0, 60)}...</p>
+        <p>${player.desc.substring(0,60)}...</p>
       </div>
     `;
-    card.addEventListener('click', () => openLB(player));
+    card.addEventListener('click',()=>openLB(player));
     grid.appendChild(card);
   });
 }
 
-function openLB(player) {
-  lbImage.src = player.img;
-  lbName.textContent = player.name;
-  lbDesc.textContent = player.desc;
-  lightbox.style.display = 'flex';
+function openLB(player){
+  lbImage.src=player.img;
+  lbName.textContent=player.name;
+  lbDesc.textContent=player.desc;
+  lightbox.style.display='flex';
 }
 
-closeLB.addEventListener('click', () => lightbox.style.display = 'none');
+closeLB.addEventListener('click',()=>lightbox.style.display='none');
+
+searchBtn.addEventListener('click',()=>{
+  const query = searchInput.value.toLowerCase();
+  const filtered = players.filter(p=>p.name.toLowerCase().includes(query));
+  render(filtered);
+});
 
 render(players);
 </script>
@@ -108,7 +125,7 @@ render(players);
 </html>
 <!DOCTYPE html>
 <html lang="sv">
-
+<
 
   
 
