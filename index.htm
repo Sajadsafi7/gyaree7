@@ -53,8 +53,8 @@
   .controls select {
     padding:8px 12px;
     border-radius:8px;
-    border:1px solid #555;
-    background:#111;
+    border:1px solid #444;
+    background:#000;
     color:#fff;
     outline:none;
   }
@@ -63,16 +63,15 @@
     padding:8px 15px;
     border:none;
     border-radius:8px;
-    background:#ffb703;
+    background:#fff;
     color:#000;
     font-weight:bold;
     cursor:pointer;
     transition:0.3s;
   }
 
-  .controls button:hover { background:#ffd166; }
+  .controls button:hover { background:#ccc; }
 
-  /* INTRO */
   .intro {
     text-align:center;
     padding:80px 20px 20px;
@@ -83,13 +82,13 @@
   .intro h2 {
     font-size:2.5em;
     margin-bottom:10px;
-    color:#ffb703;
+    color:#fff;
     letter-spacing:1px;
   }
 
   .intro p {
     font-size:1.2em;
-    color:#ccc;
+    color:#aaa;
     max-width:600px;
     margin:auto;
   }
@@ -99,7 +98,6 @@
     to { opacity:1; transform:translateY(0); }
   }
 
-  /* GRID */
   .grid {
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
@@ -107,7 +105,6 @@
     padding:20px 30px;
   }
 
-  /* CARD */
   .card {
     position:relative;
     background:#111;
@@ -131,11 +128,15 @@
     width:100%;
     height:250px;
     object-fit:cover;
-    transition:transform 0.3s;
+    filter:grayscale(100%);
+    transition:transform 0.3s, filter 0.3s;
     display:block;
   }
 
-  .card:hover img { transform:scale(1.05); }
+  .card:hover img {
+    transform:scale(1.05);
+    filter:grayscale(0%);
+  }
 
   .card .body {
     padding:15px;
@@ -153,28 +154,19 @@
     margin-top:3px;
   }
 
-  /* Rank / Medal */
   .rank {
     position:absolute;
     top:10px;
     left:10px;
-    background:rgba(255,255,255,0.15);
+    background:rgba(255,255,255,0.1);
     color:#fff;
     padding:6px 10px;
     border-radius:8px;
     font-weight:bold;
     font-size:1em;
     backdrop-filter:blur(4px);
-    display:flex;
-    align-items:center;
-    gap:5px;
   }
 
-  .rank.gold { background:linear-gradient(45deg,#ffd700,#b8860b); color:#000; }
-  .rank.silver { background:linear-gradient(45deg,#c0c0c0,#a9a9a9); color:#000; }
-  .rank.bronze { background:linear-gradient(45deg,#cd7f32,#8b4513); color:#000; }
-
-  /* Lightbox */
   .lightbox {
     display:flex;
     position:fixed;
@@ -199,6 +191,7 @@
     border-radius:12px;
     margin-bottom:15px;
     box-shadow:0 8px 20px rgba(255,255,255,0.2);
+    filter:grayscale(100%);
   }
 
   .lightbox .text-container {
@@ -237,14 +230,14 @@
     padding:10px 20px;
     border:none;
     border-radius:8px;
-    background:#ffb703;
+    background:#fff;
     color:#000;
     font-weight:bold;
     cursor:pointer;
     transition:0.2s;
   }
 
-  .lightbox button:hover { background:#ffd166; }
+  .lightbox button:hover { background:#ccc; }
 
   @media(max-width:600px){
     .card img { height:180px; }
@@ -280,7 +273,6 @@
 
 <div class="grid" id="grid"></div>
 
-<!-- Lightbox -->
 <div class="lightbox" id="lightbox">
   <img id="lbImage" src="" alt="Spelare">
   <div class="text-container">
@@ -329,12 +321,8 @@ function render(list){
   list.forEach((player,i)=>{
     const card=document.createElement('div');
     card.className='card';
-    let rankClass='', medal='';
-    if(i===0){ rankClass='gold'; medal='🥇'; }
-    else if(i===1){ rankClass='silver'; medal='🥈'; }
-    else if(i===2){ rankClass='bronze'; medal='🥉'; }
     card.innerHTML=`
-      <div class="rank ${rankClass}">${medal || '#'+(i+1)}</div>
+      <div class="rank">#${i+1}</div>
       <img src="${player.img}" alt="${player.name}">
       <div class="body">
         <h3>${player.name}</h3>
@@ -382,6 +370,7 @@ render(filteredPlayers);
 </html>
 <!DOCTYPE html>
 <html lang="sv">
+
 
 
 
