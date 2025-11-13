@@ -6,222 +6,229 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Allt om bilar — Stor guide</title>
+  <title>Proffsig bilportal — Allt om bilar</title>
+  <meta name="description" content="Professionell guide om bilar: 20+ modeller, bilder, detaljer, prestanda och delar. Byggd med HTML, CSS & JavaScript." />
   <style>
-    :root{--bg:#0f1724;--card:#0b1220;--accent:#f59e0b;--muted:#9aa4b2;--glass: rgba(255,255,255,0.03)}
-    html,body{height:100%;margin:0;font-family:Inter,Arial,Helvetica,sans-serif;background:linear-gradient(180deg,#071028 0%, #0b1624 100%);color:#e6eef6}
-    header{padding:28px 32px;border-bottom:1px solid rgba(255,255,255,0.03);display:flex;gap:18px;align-items:center}
-    .logo{display:flex;gap:12px;align-items:center}
-    .logo .mark{width:48px;height:48px;background:linear-gradient(135deg,var(--accent),#ef4444);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700}
-    h1{margin:0;font-size:20px}
-    p.lead{margin:0;color:var(--muted)}
-    .controls{display:flex;gap:12px;margin:18px 32px}
-    .controls input,.controls select{padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.05);background:var(--glass);color:inherit}
-    main{padding:20px 32px;display:grid;grid-template-columns:1fr 380px;gap:20px}
-    .gallery{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.02)}
-    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
-    .card{background:var(--card);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02);box-shadow:0 6px 18px rgba(2,6,23,0.6);display:flex;gap:12px;align-items:flex-start}
-    .thumb{width:88px;height:56px;border-radius:6px;background:linear-gradient(90deg,#123 0%, #345 100%);display:flex;align-items:center;justify-content:center;font-weight:700}
-    .meta{flex:1}
-    .meta h3{margin:0;font-size:16px}
-    .meta p{margin:6px 0 0;color:var(--muted);font-size:13px}
-    .specs{display:flex;gap:8px;margin-top:8px;font-size:12px;color:var(--muted)}
-    .specs span{background:rgba(255,255,255,0.02);padding:6px;border-radius:6px}
-    aside{background:linear-gradient(180deg, rgba(255,255,255,0.015), transparent);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.02);height:fit-content}
-    .section{margin-bottom:16px}
-    .section h4{margin:0 0 10px 0}
-    .parts{font-size:14px;line-height:1.4;color:#dce8f7}
-    footer{padding:20px 32px;color:var(--muted)}
-    .modal{position:fixed;inset:0;background:rgba(2,6,23,0.7);display:none;align-items:center;justify-content:center;padding:28px}
+    /* Modern, clean styling */
+    :root{--bg:#0b1220;--card:#0f1724;--muted:#9aa4b2;--accent:#ffb703;--glass:rgba(255,255,255,0.03)}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;color:#eaf2ff;background:linear-gradient(180deg,#061028 0%,#071628 100%);-webkit-font-smoothing:antialiased}
+    header{position:sticky;top:0;background:linear-gradient(180deg,rgba(2,6,23,0.6),transparent);backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.03);padding:14px 24px;display:flex;align-items:center;gap:16px;z-index:30}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#f97316);display:flex;align-items:center;justify-content:center;font-weight:800;color:#081027}
+    h1{font-size:18px;margin:0}
+    nav{margin-left:auto;display:flex;gap:10px}
+    nav a{color:var(--muted);text-decoration:none;font-size:14px}
+
+    .hero{padding:28px 24px 18px;border-bottom:1px solid rgba(255,255,255,0.02);display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:center}
+    .hero h2{margin:0 0 6px 0}
+    .searchbar{display:flex;gap:10px}
+    .searchbar input{flex:1;padding:12px 14px;border-radius:12px;border:1px solid rgba(255,255,255,0.04);background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);color:inherit;font-size:15px}
+    .searchbar button{padding:12px 14px;border-radius:12px;border:none;background:var(--accent);color:#061027;font-weight:600;cursor:pointer}
+    .filters{display:flex;gap:8px;margin-top:10px}
+    .filters select{padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+
+    main{display:grid;grid-template-columns:1fr 360px;gap:20px;padding:20px}
+    .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.03);box-shadow:0 8px 30px rgba(2,6,23,0.6);cursor:pointer;transition:transform .18s ease, box-shadow .18s ease}
+    .card:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(2,6,23,0.7)}
+
+    .card img{width:100%;height:160px;object-fit:cover;display:block}
+    .card-body{padding:12px}
+    .card-body h3{margin:0;font-size:16px}
+    .meta{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+    .tags{display:flex;gap:8px;flex-wrap:wrap}
+    .tag{background:rgba(255,255,255,0.03);padding:6px 8px;border-radius:8px;font-size:12px;color:var(--muted)}
+
+    aside{padding:16px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);border:1px solid rgba(255,255,255,0.03)}
+    .aside h4{margin-top:0}
+    .spec-list p{margin:6px 0;color:#dce8f7}
+
+    footer{padding:18px 24px;color:var(--muted);font-size:13px}
+
+    /* Modal */
+    .modal{position:fixed;inset:0;background:rgba(2,6,23,0.7);display:none;align-items:center;justify-content:center;padding:24px}
     .modal.open{display:flex}
-    .modal .box{width:min(980px,96%);background:#071428;padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.04);display:grid;grid-template-columns:1fr 320px;gap:12px}
-    .close{background:transparent;border:1px solid rgba(255,255,255,0.03);padding:6px 8px;border-radius:8px;color:var(--muted);cursor:pointer}
-    .car-img{height:200px;border-radius:8px;background:linear-gradient(90deg,#112 0%, #225 100%);display:flex;align-items:center;justify-content:center;font-weight:700}
-    .btn{background:var(--accent);color:#061223;padding:10px 12px;border-radius:8px;border:none;cursor:pointer}
-    @media (max-width:900px){main{grid-template-columns:1fr} .modal .box{grid-template-columns:1fr} aside{order:2}}
+    .modal .sheet{width:min(1100px,98%);max-height:90vh;overflow:auto;background:#071428;border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,0.04);display:grid;grid-template-columns:1fr 360px;gap:16px}
+    .sheet img{width:100%;height:320px;object-fit:cover;border-radius:10px}
+    .close{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:8px 10px;border-radius:10px;color:var(--muted);cursor:pointer}
+
+    @media (max-width:1000px){.hero{grid-template-columns:1fr}main{grid-template-columns:1fr} .sheet{grid-template-columns:1fr} aside{order:2}}
   </style>
 </head>
 <body>
   <header>
-    <div class="logo">
-      <div class="mark">B</div>
+    <div class="brand">
+      <div class="logo">B</div>
       <div>
-        <h1>Allt om bilar — Stor guide</h1>
-        <p class="lead">Förklaring av delar, prestanda och de mest populära bilarna (minst 20 exemplar).</p>
+        <h1>Proffsig bilportal</h1>
+        <div style="font-size:13px;color:var(--muted)">20+ modeller — bilder, prestanda och tekniska förklaringar</div>
       </div>
     </div>
+    <nav>
+      <a href="#">Hem</a>
+      <a href="#cars">Modeller</a>
+      <a href="#guides">Guider</a>
+    </nav>
   </header>
 
-  <div class="controls">
-    <input id="search" placeholder="Sök bil eller modell..." />
-    <select id="filterType"><option value="all">Alla typer</option><option value="Sedan">Sedan</option><option value="SUV">SUV</option><option value="Coupé">Coupé</option><option value="Sport">Sport</option><option value="Pickup">Pickup</option></select>
-    <select id="sortBy"><option value="popularity">Sortera (Populär)</option><option value="topspeed">Högsta hastighet</option><option value="accel">0-100 km/h</option></select>
-    <button id="reset" class="close">Återställ</button>
-  </div>
+  <section class="hero">
+    <div>
+      <h2>Hitta din bil — sök och filtrera snabbt</h2>
+      <div class="searchbar" style="margin-top:8px">
+        <input id="search" placeholder="Sök bil eller modell, t ex 'Tesla' eller 'SUV'" />
+        <button id="searchBtn">Sök</button>
+      </div>
+      <div class="filters">
+        <select id="typeFilter"><option value="all">Alla typer</option><option>Sedan</option><option>SUV</option><option>Sport</option><option>Pickup</option><option>Hatchback</option><option>Wagon</option></select>
+        <select id="sortBy"><option value="popularity">Sortera: Populär</option><option value="topspeed">Högsta hastighet</option><option value="accel">0–100 km/h (snabbast)</option></select>
+        <select id="fuel"><option value="any">Alla drivmedel</option><option>El</option><option>Hybrid</option><option>Bensin</option><option>Diesel</option></select>
+      </div>
+    </div>
+    <div style="text-align:right">
+      <div style="font-size:13px;color:var(--muted)">Visar <strong id="count">20</strong> modeller</div>
+      <div style="margin-top:12px;background:linear-gradient(180deg,#071428,#081a2a);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02)">
+        <h3 style="margin:0">Snabbguide</h3>
+        <div style="font-size:13px;color:var(--muted);margin-top:8px">Klicka på en modell för detaljer, bilder och tekniska specifikationer.</div>
+      </div>
+    </div>
+  </section>
 
   <main>
-    <section class="gallery">
-      <div class="section"><strong id="count">20</strong> bilar hittade</div>
-      <div class="grid" id="cards"></div>
+    <section id="cars">
+      <div class="cards" id="cards"></div>
     </section>
 
     <aside>
-      <div class="section">
-        <h4>Hur en bil fungerar</h4>
-        <div class="parts">
-          <p><strong>Motor:</strong> Omvandlar bränsle (eller el) till rörelse. Förbränningsmotorer använder cylinder, kolv, tändning; elmotorer genererar vridmoment direkt.</p>
-          <p><strong>Växellåda:</strong> Överför och anpassar varvtal och vridmoment mellan motor och hjul (manuell, automat, CVT, eller direkt växel i elbilar).</p>
-          <p><strong>Bromsar:</strong> Får bilen att stanna. Vanligtvis skivbromsar fram och antingen skiv- eller trumbromsar bak; ABS förhindrar låsning.</p>
-          <p><strong>Fjädring:</strong> Dämpar ojämnheter och håller hjulen i kontakt med vägen (fjädrar, stötdämpare, stabilisatorstänger).</p>
-          <p><strong>Chassi/kaross:</strong> Stommen som håller allt samman. Modern design fokuserar på säkerhet och aerodynamik.</p>
-          <p><strong>Elektronik:</strong> Motorstyrning, säkerhetssystem (ESP, airbags), infotainment, ADAS-funktioner (autobroms, filhållning).</p>
+      <div>
+        <h4 id="guides">Hur en bil fungerar</h4>
+        <div class="spec-list">
+          <p><strong>Motor:</strong> Förbränningsmotorer har cylindrar, kolvar och tändning. Elmotorer levererar vridmoment direkt med batteripaket.</p>
+          <p><strong>Växellåda:</strong> Automat, manuell eller e‑CVT. Påverkar acceleration och bränsleförbrukning.</p>
+          <p><strong>Bromsar & säkerhet:</strong> Skivbromsar, ABS, ESC och krockkuddar är kärnan i säkerhet.</p>
+          <p><strong>Fjädring:</strong> Ger komfort och vägkontakt. Olika uppsättningar för sport kontra komfort.</p>
         </div>
-      </div>
-
-      <div class="section">
-        <h4>Snabb förklaring av prestanda</h4>
-        <div class="parts">
-          <p><strong>Topphastighet:</strong> Maximal hastighet under idealförhållanden.</p>
-          <p><strong>0–100 km/h:</strong> Ett vanligt mått på acceleration.</p>
-          <p><strong>EFFEKT (hp eller kW):</strong> Motorns effekt; mer effekt ger ofta snabbare acceleration.</p>
-        </div>
-      </div>
-
-      <div class="section">
-        <h4>Ordlista</h4>
-        <div class="parts">
-          <p><strong>Torque / Vridmoment:</strong> Rotationskraft som hjälper acceleration.</p>
-          <p><strong>AWD / 4WD:</strong> Fyrhjulsdrift — bättre grepp i svåra förhållanden.</p>
-        </div>
+        <hr style="border:none;border-top:1px solid rgba(255,255,255,0.02);margin:12px 0" />
+        <h4>Prestanda</h4>
+        <p style="color:var(--muted)">Topphastighet, 0–100 km/h och effekt (hp/kW) är generella mått — verklig upplevelse påverkas av vikt, däck och aerodynamik.</p>
       </div>
     </aside>
   </main>
 
   <footer>
-    Sidan är ett exempel byggd med HTML, CSS och JavaScript — klicka på en bil för mer information.
+    <div style="max-width:1100px;margin:0 auto;padding:12px 24px">Byggd med HTML, CSS och JavaScript — vill du ha separata filer (styles.css, app.js) eller en enda fil?</div>
   </footer>
 
-  <div class="modal" id="modal">
-    <div class="box">
-      <div>
-        <div id="modalTitle" style="display:flex;justify-content:space-between;align-items:center">
-          <h2 id="carName">Bil</h2>
-          <button id="closeModal" class="close">Stäng</button>
-        </div>
-        <div class="car-img" id="carImg">Bild</div>
-        <div style="margin-top:12px" id="carDesc"></div>
-      </div>
-      <div style="padding-left:12px;border-left:1px solid rgba(255,255,255,0.02)">
-        <h4>Specifikationer</h4>
-        <div id="specList" style="font-size:14px"></div>
-        <h4 style="margin-top:12px">Kommentar om delar</h4>
-        <div id="partsNote" style="font-size:13px;color:var(--muted)"></div>
-      </div>
-    </div>
-  </div>
+  <div class="modal" id="modal"><div class="sheet" id="sheet"></div></div>
 
   <script>
-    // Lista med minst 20 populära bilar och fakta (på svenska)
+    // Professionell data med bilder (Unsplash-källor via söksträngar)
     const cars = [
-      {name: 'Toyota Corolla', type:'Sedan', engine:'1.8L I4 / Hybrid', power:'139 hp', topspeed:180, accel:9.5, desc:'Världens mest sålda bilmodell över tid. Pålitlig, ekonomisk.'},
-      {name: 'Ford F-150', type:'Pickup', engine:'3.5L V6 / Hybrid', power:'400 hp', topspeed:175, accel:7.8, desc:'Populär pickup i USA, kraftfull och praktisk.'},
-      {name: 'Volkswagen Golf', type:'Hatchback', engine:'1.5L TSI', power:'150 hp', topspeed:210, accel:8.5, desc:'Kompakt och mångsidig, känd i Europa.'},
-      {name: 'Honda Civic', type:'Sedan', engine:'2.0L I4 / Hybrid', power:'158 hp', topspeed:205, accel:8.2, desc:'Sportig kompakt som är både pålitlig och rolig att köra.'},
-      {name: 'Tesla Model 3', type:'Sedan', engine:'El', power:'258–480 hp', topspeed:233, accel:3.3, desc:'Populär elbil med lång räckvidd och snabba prestanda.'},
-      {name: 'BMW 3 Series', type:'Sedan', engine:'2.0L I4 / 3.0L I6', power:'255–382 hp', topspeed:250, accel:4.4, desc:'Premium-sedan som kombinerar komfort och sportighet.'},
-      {name: 'Mercedes-Benz C-Class', type:'Sedan', engine:'2.0L I4 / 3.0L I6', power:'255–375 hp', topspeed:250, accel:4.9, desc:'Lyxig och tekniskt avancerad sedan.'},
-      {name: 'Audi A4', type:'Sedan', engine:'2.0L TFSI', power:'201 hp', topspeed:240, accel:6.8, desc:'Känd för gott bygge och bra köregenskaper.'},
-      {name: 'Toyota RAV4', type:'SUV', engine:'2.5L I4 / Hybrid', power:'203 hp', topspeed:180, accel:8.4, desc:'Fyrhjulsdriven SUV med bra bränsleekonomi och utrymme.'},
-      {name: 'Honda CR-V', type:'SUV', engine:'1.5L Turbo / Hybrid', power:'190 hp', topspeed:185, accel:8.9, desc:'Praktisk och familjevänlig SUV.'},
-      {name: 'Nissan Qashqai / Rogue', type:'SUV', engine:'1.3L Turbo', power:'158 hp', topspeed:190, accel:9.8, desc:'Mycket såld i Europa och Nordamerika i olika skepnader.'},
-      {name: 'Chevrolet Silverado', type:'Pickup', engine:'5.3L V8', power:'355 hp', topspeed:170, accel:7.9, desc:'Storsäljande pickup för arbete och fritid.'},
-      {name: 'Hyundai Tucson', type:'SUV', engine:'1.6L Turbo / Hybrid', power:'180 hp', topspeed:195, accel:9.3, desc:'Prisvärd SUV med modern teknik.'},
-      {name: 'Kia Sportage', type:'SUV', engine:'1.6L Turbo / Hybrid', power:'180 hp', topspeed:190, accel:9.4, desc:'Konkurrent till Tucson med liknande egenskaper.'},
-      {name: 'Subaru Outback', type:'Wagon', engine:'2.5L Boxer', power:'182 hp', topspeed:200, accel:10.7, desc:'Robust kombi med fyrhjulsdrift och hög markfrigång.'},
-      {name: 'Mazda CX-5', type:'SUV', engine:'2.5L I4', power:'187 hp', topspeed:205, accel:8.7, desc:'Känd för bra körupplevelse och design.'},
-      {name: 'Porsche 911', type:'Sport', engine:'3.0L Flat-6', power:'379–640 hp', topspeed:330, accel:2.7, desc:'Ikonisk sportbil med exceptionella prestanda.'},
-      {name: 'Ferrari F8 Tributo', type:'Sport', engine:'3.9L V8', power:'710 hp', topspeed:340, accel:2.9, desc:'Exotisk superbil, fokus på prestanda och design.'},
-      {name: 'Lamborghini Huracán', type:'Sport', engine:'5.2L V10', power:'602–631 hp', topspeed:325, accel:2.9, desc:'Dramatisk design och extremt hög prestanda.'},
-      {name: 'Volvo XC60', type:'SUV', engine:'2.0L I4 / Hybrid', power:'250–400 hp', topspeed:230, accel:5.5, desc:'Säker och bekväm SUV från Volvo, populär i Norden.'}
+      {name:'Toyota Corolla', type:'Sedan', fuel:'Hybrid', power:'139 hp', topspeed:180, accel:9.5, img:'https://source.unsplash.com/800x600/?Toyota%20Corolla,car', desc:'Pålitlig och bränslesnål familjesedan.'},
+      {name:'Ford F-150', type:'Pickup', fuel:'Bensin', power:'400 hp', topspeed:175, accel:7.8, img:'https://source.unsplash.com/800x600/?Ford%20F-150,truck', desc:'Arbets- och fritidspickup med hög kapacitet.'},
+      {name:'Volkswagen Golf', type:'Hatchback', fuel:'Bensin', power:'150 hp', topspeed:210, accel:8.5, img:'https://source.unsplash.com/800x600/?Volkswagen%20Golf,car', desc:'Komfortabel kompaktbil för stad och motorväg.'},
+      {name:'Honda Civic', type:'Sedan', fuel:'Bensin', power:'158 hp', topspeed:205, accel:8.2, img:'https://source.unsplash.com/800x600/?Honda%20Civic,car', desc:'Sportig och pålitlig kompakt sedan.'},
+      {name:'Tesla Model 3', type:'Sedan', fuel:'El', power:'258-480 hp', topspeed:233, accel:3.3, img:'https://source.unsplash.com/800x600/?Tesla%20Model%203,tesla', desc:'Elektrisk bil med hög räckvidd och acceleration.'},
+      {name:'BMW 3 Series', type:'Sedan', fuel:'Bensin', power:'255-382 hp', topspeed:250, accel:4.4, img:'https://source.unsplash.com/800x600/?BMW%203%20Series,car', desc:'Premium-sedan med god balans mellan komfort och sport.'},
+      {name:'Mercedes C-Class', type:'Sedan', fuel:'Bensin', power:'255-375 hp', topspeed:250, accel:4.9, img:'https://source.unsplash.com/800x600/?Mercedes%20C%20Class,car', desc:'Lyx och teknik i kompakt format.'},
+      {name:'Audi A4', type:'Sedan', fuel:'Bensin', power:'201 hp', topspeed:240, accel:6.8, img:'https://source.unsplash.com/800x600/?Audi%20A4,car', desc:'Bra bygge och stabil körupplevelse.'},
+      {name:'Toyota RAV4', type:'SUV', fuel:'Hybrid', power:'203 hp', topspeed:180, accel:8.4, img:'https://source.unsplash.com/800x600/?Toyota%20RAV4,SUV', desc:'Populär SUV med hög användbarhet.'},
+      {name:'Honda CR-V', type:'SUV', fuel:'Hybrid', power:'190 hp', topspeed:185, accel:8.9, img:'https://source.unsplash.com/800x600/?Honda%20CR-V,SUV', desc:'Familjevänlig SUV med bra lastutrymme.'},
+      {name:'Nissan Qashqai', type:'SUV', fuel:'Bensin', power:'158 hp', topspeed:190, accel:9.8, img:'https://source.unsplash.com/800x600/?Nissan%20Qashqai,SUV', desc:'Mycket såld crossover i Europa.'},
+      {name:'Chevrolet Silverado', type:'Pickup', fuel:'Bensin', power:'355 hp', topspeed:170, accel:7.9, img:'https://source.unsplash.com/800x600/?Chevrolet%20Silverado,truck', desc:'Robust pickup för tunga laster.'},
+      {name:'Hyundai Tucson', type:'SUV', fuel:'Hybrid', power:'180 hp', topspeed:195, accel:9.3, img:'https://source.unsplash.com/800x600/?Hyundai%20Tucson,SUV', desc:'Modern SUV med bra värde.'},
+      {name:'Kia Sportage', type:'SUV', fuel:'Hybrid', power:'180 hp', topspeed:190, accel:9.4, img:'https://source.unsplash.com/800x600/?Kia%20Sportage,SUV', desc:'Prisvärd och välutrustad crossover.'},
+      {name:'Subaru Outback', type:'Wagon', fuel:'Bensin', power:'182 hp', topspeed:200, accel:10.7, img:'https://source.unsplash.com/800x600/?Subaru%20Outback,car', desc:'Robust kombi med fyrhjulsdrift.'},
+      {name:'Mazda CX-5', type:'SUV', fuel:'Bensin', power:'187 hp', topspeed:205, accel:8.7, img:'https://source.unsplash.com/800x600/?Mazda%20CX-5,SUV', desc:'Kompromisslös körupplevelse i sin klass.'},
+      {name:'Porsche 911', type:'Sport', fuel:'Bensin', power:'379-640 hp', topspeed:330, accel:2.7, img:'https://source.unsplash.com/800x600/?Porsche%20911,sports%20car', desc:'Legend bland sportbilar.'},
+      {name:'Ferrari F8 Tributo', type:'Sport', fuel:'Bensin', power:'710 hp', topspeed:340, accel:2.9, img:'https://source.unsplash.com/800x600/?Ferrari%20F8,sports%20car', desc:'Extrem prestanda och design.'},
+      {name:'Lamborghini Huracan', type:'Sport', fuel:'Bensin', power:'602-631 hp', topspeed:325, accel:2.9, img:'https://source.unsplash.com/800x600/?Lamborghini%20Huracan,sports%20car', desc:'Italiensk superbil med dramatik.'},
+      {name:'Volvo XC60', type:'SUV', fuel:'Hybrid', power:'250-400 hp', topspeed:230, accel:5.5, img:'https://source.unsplash.com/800x600/?Volvo%20XC60,SUV', desc:'Säker och populär i Norden.'}
     ];
 
-    // Funktion för att skapa en enkel SVG-thumbnal (för att inte ladda externa bilder)
-    function carSVGInitials(name){
-      const initials = name.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();
-      return `<svg viewBox="0 0 200 120" xmlns='http://www.w3.org/2000/svg' style='width:100%;height:100%;border-radius:6px;'><rect width='100%' height='100%' rx='8' fill='url(#g)' /><defs><linearGradient id='g' x1='0' x2='1'><stop offset='0' stop-color='#0ea5a6'/><stop offset='1' stop-color='#6366f1'/></linearGradient></defs><text x='50%' y='55%' font-size='30' fill='#071428' font-weight='700' text-anchor='middle' dominant-baseline='middle'>${initials}</text></svg>`;
-    }
-
-    // Renderfunktion
     const cardsEl = document.getElementById('cards');
     const countEl = document.getElementById('count');
     const searchEl = document.getElementById('search');
-    const filterEl = document.getElementById('filterType');
-    const sortEl = document.getElementById('sortBy');
-    const resetBtn = document.getElementById('reset');
+    const typeFilter = document.getElementById('typeFilter');
+    const sortBy = document.getElementById('sortBy');
+    const fuelFilter = document.getElementById('fuel');
+    const modal = document.getElementById('modal');
+    const sheet = document.getElementById('sheet');
 
     function render(list){
       cardsEl.innerHTML = '';
       countEl.textContent = list.length;
-      list.forEach((c, index) =>{
-        const div = document.createElement('div');
-        div.className = 'card';
-        div.innerHTML = `
-          <div class="thumb">${carSVGInitials(c.name)}</div>
-          <div class="meta">
-            <h3>${c.name}</h3>
-            <p>${c.desc}</p>
-            <div class="specs"><span>${c.type}</span><span>${c.power}</span><span>Top: ${c.topspeed} km/h</span></div>
+      list.forEach(car => {
+        const el = document.createElement('article');
+        el.className = 'card';
+        el.innerHTML = `
+          <img loading="lazy" src="${car.img}" alt="${car.name}">
+          <div class="card-body">
+            <h3>${car.name}</h3>
+            <div class="meta">
+              <div class="tags"><span class="tag">${car.type}</span><span class="tag">${car.fuel}</span></div>
+              <div style="text-align:right"><div style="font-weight:700">Top: ${car.topspeed} km/h</div><div style="font-size:12px;color:var(--muted)">0–100: ${car.accel}s</div></div>
+            </div>
           </div>
         `;
-        div.addEventListener('click', ()=> openModal(c));
-        cardsEl.appendChild(div);
+        el.addEventListener('click', ()=> openModal(car));
+        cardsEl.appendChild(el);
       });
     }
 
     function openModal(car){
-      document.getElementById('modal').classList.add('open');
-      document.getElementById('carName').textContent = car.name;
-      document.getElementById('carImg').innerHTML = carSVGInitials(car.name);
-      document.getElementById('carDesc').innerHTML = `<p style='margin-top:8px'>${car.desc}</p>`;
-      document.getElementById('specList').innerHTML = `
-        <p><strong>Typ:</strong> ${car.type}</p>
-        <p><strong>Motor:</strong> ${car.engine}</p>
-        <p><strong>Effekt:</strong> ${car.power}</p>
-        <p><strong>Topphastighet:</strong> ${car.topspeed} km/h</p>
-        <p><strong>0–100 km/h:</strong> ${car.accel} s</p>
+      modal.classList.add('open');
+      sheet.innerHTML = `
+        <div>
+          <img src="${car.img}" alt="${car.name}">
+          <h2 style=\"margin-top:12px\">${car.name}</h2>
+          <p style=\"color:var(--muted)\">${car.desc}</p>
+          <div style=\"margin-top:10px\">
+            <button class=\"close\" id=\"closeBtn\">Stäng</button>
+          </div>
+        </div>
+        <aside style=\"padding-left:12px;border-left:1px solid rgba(255,255,255,0.02)\">
+          <h3>Specifikationer</h3>
+          <p><strong>Typ:</strong> ${car.type}</p>
+          <p><strong>Drivmedel:</strong> ${car.fuel}</p>
+          <p><strong>Effekt:</strong> ${car.power}</p>
+          <p><strong>Topphastighet:</strong> ${car.topspeed} km/h</p>
+          <p><strong>0–100 km/h:</strong> ${car.accel} s</p>
+          <hr style=\"border:none;border-top:1px solid rgba(255,255,255,0.02);margin:12px 0\">
+          <p style=\"color:var(--muted)\">Tips: Kontrollera servicehistorik, däckens skick och bromsarnas status. Elektriska system kräver särskild uppmärksamhet vid köp av begagnat.</p>
+        </aside>
       `;
-      document.getElementById('partsNote').textContent = `Tips: Titta på motorn för att förstå effekt, kontrollera växellådan för körkomfort och bromsarnas skick för säkerhet. Modern elektronik styr mycket av prestandan.`;
+      document.getElementById('closeBtn').addEventListener('click', ()=> modal.classList.remove('open'));
     }
 
-    document.getElementById('closeModal').addEventListener('click', ()=> document.getElementById('modal').classList.remove('open'));
-    document.getElementById('modal').addEventListener('click', (e)=>{ if(e.target.id === 'modal') document.getElementById('modal').classList.remove('open'); });
+    modal.addEventListener('click', (e)=>{ if(e.target.id === 'modal') modal.classList.remove('open') });
 
-    // Sök / filter / sort
     function applyFilters(){
       const q = searchEl.value.trim().toLowerCase();
-      const type = filterEl.value;
-      let result = cars.filter(c => (c.name.toLowerCase().includes(q) || c.desc.toLowerCase().includes(q)) && (type==='all' || c.type===type));
-      const sort = sortEl.value;
-      if(sort === 'topspeed') result.sort((a,b)=> b.topspeed - a.topspeed);
-      if(sort === 'accel') result.sort((a,b)=> a.accel - b.accel);
-      if(sort === 'popularity') result = result; // default
-      render(result);
+      const type = typeFilter.value;
+      const fuel = fuelFilter.value;
+      let res = cars.filter(c => (c.name.toLowerCase().includes(q) || c.desc.toLowerCase().includes(q) || c.type.toLowerCase().includes(q)) && (type==='all' || c.type===type) && (fuel==='any' || c.fuel===fuel));
+      const sort = sortBy.value;
+      if(sort==='topspeed') res.sort((a,b)=> b.topspeed - a.topspeed);
+      if(sort==='accel') res.sort((a,b)=> a.accel - b.accel);
+      render(res);
     }
 
+    document.getElementById('searchBtn').addEventListener('click', applyFilters);
     searchEl.addEventListener('input', applyFilters);
-    filterEl.addEventListener('change', applyFilters);
-    sortEl.addEventListener('change', applyFilters);
-    resetBtn.addEventListener('click', ()=>{ searchEl.value=''; filterEl.value='all'; sortEl.value='popularity'; applyFilters(); });
+    typeFilter.addEventListener('change', applyFilters);
+    sortBy.addEventListener('change', applyFilters);
+    fuelFilter.addEventListener('change', applyFilters);
 
     // Initial render
     render(cars);
 
-    // Extra: kort förklaring i konsolen (exempel på .length användning)
-    console.log('Antal bilar i listan:', cars.length);
+    // Konsolhint
+    console.log('Proffsig bilportal laddad — antal modeller:', cars.length);
   </script>
 </body>
 </html>
-</h1>
-    </body>
-</html>
-
+<!doctype html>
+<html
+<head>
+  
