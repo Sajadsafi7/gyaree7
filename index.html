@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Barista Café</title>
+  <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+
+<header>
+  <div class="logo-container">
+    <img src="assets\coffee-logo-in-flat-design-style-graphic-free-png.webp" alt="Barista Café Logo" class="logo" />
+    <h1>Barista Café</h1>
+  </div>
+  <div class="controls">
+    <input id="searchInput" placeholder="Sök dryck eller mat..." />
+    <select id="categoryFilter">
+      <option value="all">Alla kategorier</option>
+      <option value="Varm Dryck">Varm Dryck</option>
+      <option value="Kall Dryck">Kall Dryck</option>
+      <option value="Juice">Juice</option>
+      <option value="Mat">Mat</option>
+    </select>
+    <button id="applyBtn">Sök</button>
+  </div>
+</header>
+
+<!-- HERO SECTION -->
+<section class="intro hero">
+  <div class="hero-content">
+    <h2>Välkommen till Barista Café</h2>
+    <p>Upptäck våra handgjorda drycker och färska smörgåsar. En plats där varje klunk känns som hemma ☕.</p>
+  </div>
+</section>
+
+<div class="grid" id="grid"></div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <img id="lbImage" src="" alt="Produkt" />
+  <div class="text-container">
+    <h2 id="lbName"></h2>
+    <p id="lbDesc"></p>
+    <p id="lbPrice" class="price"></p>
+  </div>
+  <button id="closeLB">Stäng</button>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

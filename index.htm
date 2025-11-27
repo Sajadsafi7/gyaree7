@@ -1,286 +1,93 @@
 <!DOCTYPE html>
-<html>
-    <body>
-       <h1><!DOCTYPE html>
 <html lang="sv">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Barista Café</title>
-<style>
-body {
-  margin: 0;
-  font-family: "Inter", Arial, sans-serif;
-  background: #111;
-  color: #fff;
-}
-
-/* HEADER */
-header {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  background: #1b1b1b;
-  padding: 20px 30px;
-  border-bottom: 2px solid #d2b48c;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-header h1 {
-  color: #d2b48c;
-  margin: 0;
-  font-size: 1.8em;
-}
-.controls {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-.controls input,
-.controls select {
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: 1px solid #555;
-  background: #222;
-  color: #fff;
-  outline: none;
-}
-.controls button {
-  padding: 8px 15px;
-  background: #d2b48c;
-  color: #000;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.3s;
-}
-.controls button:hover {
-  background: #f0c98a;
-}
-
-/* INTRO */
-.intro {
-  text-align: center;
-  padding: 60px 20px 30px;
-}
-.intro h2 {
-  color: #d2b48c;
-  font-size: 2.3em;
-  margin-bottom: 10px;
-}
-.intro p {
-  color: #ccc;
-  font-size: 1.1em;
-  max-width: 600px;
-  margin: auto;
-}
-
-/* GRID */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-  padding: 20px 30px;
-}
-
-/* CARD */
-.card {
-  background: #1b1b1b;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-  transition: transform 0.3s, box-shadow 0.3s;
-  cursor: pointer;
-}
-.card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 8px 20px rgba(210,180,140,0.3);
-}
-.card img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-}
-.card .body {
-  padding: 15px;
-}
-.card h3 {
-  color: #fff;
-  margin: 0;
-}
-.card p {
-  color: #bbb;
-  font-size: 0.9em;
-}
-
-/* LIGHTBOX */
-.lightbox {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.95);
-  opacity: 0;
-  visibility: hidden;
-  transform: scale(0.9);
-  transition: all 0.3s ease;
-  z-index: 200;
-  padding: 20px;
-}
-.lightbox.show {
-  opacity: 1;
-  visibility: visible;
-  transform: scale(1);
-}
-.lightbox img {
-  max-width: 90%;
-  max-height: 40%;
-  border-radius: 10px;
-  margin-bottom: 20px;
-}
-.lightbox .text-container {
-  max-height: 45vh;
-  overflow-y: auto;
-  width: 90%;
-  text-align: left;
-  padding-right: 10px;
-}
-.lightbox h2 {
-  color: #d2b48c;
-}
-.lightbox p {
-  color: #ccc;
-  line-height: 1.6em;
-}
-.lightbox button {
-  background: #d2b48c;
-  color: #000;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.2s;
-  margin-top: 10px;
-}
-.lightbox button:hover {
-  background: #f0c98a;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gustav Adolfs torg – Malmö</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f0f0f0;
+      color: #333;
+    }
+    header, footer {
+      background-color: #004080;
+      color: white;
+      padding: 10px;
+      text-align: center;
+    }
+    section {
+      background-color: white;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+    }
+    h1, h2 {
+      color: #004080;
+    }
+    img {
+      max-width: 33%;
+      height: auto;
+      border-radius: 5px;
+    }
+  </style>
 </head>
 <body>
+  <header>
+    <h1>Gustav Adolfs torg</h1>
+    <p>En historisk plats i hjärtat av Malmö</p>
+  </header>
 
-<header>
-  <h1>Barista Café</h1>
-  <div class="controls">
-    <input id="searchInput" placeholder="Sök dryck eller mat..." />
-    <select id="categoryFilter">
-      <option value="all">Alla kategorier</option>
-      <option value="Varm Dryck">Varm Dryck</option>
-      <option value="Kall Dryck">Kall Dryck</option>
-      <option value="Juice">Juice</option>
-      <option value="Mat">Mat</option>
-    </select>
-    <button id="applyBtn">Sök</button>
-  </div>
-</header>
+  <section>
+    <h2>🏛️ Historik</h2>
+    <p>Gustav Adolfs torg, ofta kallat "Gustav", är ett centralt beläget torg i Malmö. Torget anlades 1806–1807 på en tidigare sankmark utanför stadsvallen. Det fick sitt namn efter kung Gustav IV Adolf, som bodde i Malmö mellan november 1806 och maj 1807. Under denna period fungerade Malmö som Sveriges huvudstad.</p>
+  </section>
 
-<section class="intro">
-  <h2>Välkommen till Barista Café</h2>
-  <p>Upptäck våra handgjorda drycker och färska smörgåsar. En plats där varje klunk känns som hemma ☕.</p>
-</section>
+  <section>
+    <h2>🗿 Konst och skulpturer</h2>
+    <p>I mitten av torget står skulpturen "Lekande barn" av Anders Jönsson, placerad där 1914. En annan framträdande skulptur är "Fem fontäner och ett klot" av Sivert Lindblom, som pryder den östra delen av torget.</p>
+  </section>
+  <section>
+  <img src="img/karlXStaty.jpg">
+  <img src="img/musikanter.jpg">
+  <img src="img/stortorgPanorama.jpg">
 
-<div class="grid" id="grid"></div>
+  </section>
+  
+  
 
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox">
-  <img id="lbImage" src="" alt="Produkt" />
-  <div class="text-container">
-    <h2 id="lbName"></h2>
-    <p id="lbDesc"></p>
-  </div>
-  <button id="closeLB">Stäng</button>
+  
+
+    <h2>🏰 Omgivande byggnader</h2>
+    <ul>
+      <li><strong>Rivieran</strong>: En rad vita hus i fransk nyrenässansstil vid torgets norra del.</li>
+      <li><strong>Valhallapalatset</strong>: Byggt i början av 1900-talet av arkitekten Alfred Arwidius, inspirerad av nordamerikansk arkitektur.</li>
+      <li><strong>Trygghuset</strong>: En av Malmös främsta modernistiska byggnader, ritad av Erik Lallerstedt 1938.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>🎭 Kulturella evenemang</h2>
+    <p>Torget har varit värd för många kulturella evenemang, inklusive konserter och festivaler. Under sommaren hålls ofta liveframträdanden på en scen vid torget.</p>
+  </section>
+
+  <section>
+    <h2>📍 Geografisk betydelse</h2>
+    <p>Torget anses vara en central punkt i Malmö, från vilken avstånd till och från staden mäts. Det är också en viktig knutpunkt för kollektivtrafiken, med närhet till flera busslinjer.</p>
+  </section>
+
 </div>
-
-<script>
-const menu = [
-  {name:'Cappuccino',category:'Varm Dryck',desc:'En klassisk cappuccino med perfekt balans mellan espresso, mjölk och skum.',img:'https://source.unsplash.com/600x400/?cappuccino,coffee'},
-  {name:'Latte',category:'Varm Dryck',desc:'Krämig latte med silkeslent mjölkskum, perfekt för en lugn stund.',img:'https://source.unsplash.com/600x400/?latte,coffee'},
-  {name:'Espresso',category:'Varm Dryck',desc:'Ren, intensiv espresso med kraftfull arom och smak.',img:'https://source.unsplash.com/600x400/?espresso,coffee'},
-  {name:'Islatte',category:'Kall Dryck',desc:'Kall brygd latte med is, len och uppfriskande på varma dagar.',img:'https://source.unsplash.com/600x400/?iced,latte'},
-  {name:'Frappé',category:'Kall Dryck',desc:'Kaffedrink blandad med is och mjölk – perfekt sommardryck.',img:'https://source.unsplash.com/600x400/?frappe,coffee'},
-  {name:'Varm Choklad',category:'Varm Dryck',desc:'Krämig varm choklad toppad med vispgrädde och chokladsås.',img:'https://source.unsplash.com/600x400/?hot,chocolate'},
-  {name:'Apelsinjuice',category:'Juice',desc:'Färskpressad apelsinjuice, rik på smak och energi.',img:'https://source.unsplash.com/600x400/?orange,juice'},
-  {name:'Äppeljuice',category:'Juice',desc:'Klar, fruktig och naturligt söt äppeljuice.',img:'https://source.unsplash.com/600x400/?apple,juice'},
-  {name:'Kycklingmacka',category:'Mat',desc:'Grillad kycklingmacka med fräscha grönsaker och aioli.',img:'https://source.unsplash.com/600x400/?chicken,sandwich'},
-  {name:'Croissant',category:'Mat',desc:'Smörig croissant – perfekt till kaffet.',img:'https://source.unsplash.com/600x400/?croissant'},
-];
-
-let filteredMenu = [...menu];
-const grid = document.getElementById('grid');
-const searchInput = document.getElementById('searchInput');
-const categoryFilter = document.getElementById('categoryFilter');
-const applyBtn = document.getElementById('applyBtn');
-const lightbox = document.getElementById('lightbox');
-const lbImage = document.getElementById('lbImage');
-const lbName = document.getElementById('lbName');
-const lbDesc = document.getElementById('lbDesc');
-const closeLB = document.getElementById('closeLB');
-
-function render(list){
-  grid.innerHTML='';
-  list.forEach((item,i)=>{
-    const card=document.createElement('div');
-    card.className='card';
-    card.innerHTML=`
-      <img src="${item.img}" alt="${item.name}">
-      <div class="body">
-        <h3>${item.name}</h3>
-        <p>${item.desc.substring(0,60)}...</p>
-      </div>
-    `;
-    card.addEventListener('click',()=>openLightbox(item));
-    grid.appendChild(card);
-  });
-}
-
-function openLightbox(item){
-  lbImage.src=item.img;
-  lbName.textContent=item.name;
-  lbDesc.textContent=item.desc;
-  lightbox.classList.add('show');
-}
-function closeLightbox(){ lightbox.classList.remove('show'); }
-
-applyBtn.addEventListener('click',()=>{
-  const query=searchInput.value.toLowerCase();
-  const cat=categoryFilter.value;
-  filteredMenu = menu.filter(p=>{
-    return (p.name.toLowerCase().includes(query) || p.desc.toLowerCase().includes(query))
-    && (cat==='all' || p.category===cat);
-  });
-  render(filteredMenu);
-});
-
-closeLB.addEventListener('click',closeLightbox);
-
-// Render initial
-render(menu);
-</script>
-
+<section>
+    <h2>Karta</h2>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2243.3699523916757!2d13.000807215930224!3d55.60529298051902!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4653a1d420b16849%3A0xb59e650e7f12be20!2sGustav%20Adolfs%20Torg%2C%20Malm%C3%B6!5e0!3m2!1ssv!2sse!4v1614772464822!5m2!1ssv!2sse"></iframe>
+  </section>
+  
+  <footer>
+    <p>&copy; 2025 Gustav Adolfs torg – Alla rättigheter förbehållna</p>
+  </footer>
 </body>
 </html>
 
 
-
-
-
-  
-
-<head>
-  
+       
